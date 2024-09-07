@@ -1,0 +1,9 @@
+node_modules
+dist
+db_volume
+minio_data
+
+.env
+
+runBackendServer.bat
+runDockerCompose.bat
