@@ -7,11 +7,48 @@ import { BadRequestError } from "../error/BadRequestError";
 const logger = loggerWithNameSpace("Auth Controller");
 
 /**
- * Responds with access token and refresh token if credentials 
-  are correct else error is responded
- * @param req 
- * @param res 
- * @param next 
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Logs in a user and returns access and refresh tokens.
+ *     description: Responds with an access token and refresh token if the credentials are correct. Otherwise, an error is returned.
+ *     tags: [Auth]
+ *     requestBody:
+ *       description: User login credentials.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: 9VnZv@example.com
+ *               password:
+ *                 type: string
+ *                 example: Aapple!123456
+ *             required:
+ *               - username
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Successful login, returns access and refresh tokens.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     accessToken:
+ *                       type: string
+ *                     refreshToken:
+ *                       type: string
+ *       400:
+ *         description: Invalid credentials.
+ *       500:
+ *         description: Internal server error.
  */
 export async function login(req: Request, res: Response, next: NextFunction) {
   logger.info("Request: login");
@@ -35,11 +72,35 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 }
 
 /**
- * Responds with access token and refresh token if credentials 
-  are correct else error is responded
- * @param req 
- * @param res 
- * @param next 
+ * @swagger
+ * /auth/refreshAccessToken:
+ *   post:
+ *     summary: Refreshes the access token using the refresh token.
+ *     description: Generates a new access token if a valid refresh token is provided.
+ *     parameters:
+ *       - in: cookie
+ *         name: refreshToken
+ *         description: Refresh token to be used for refreshing the access token.
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: JWT token.
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       200:
+ *         description: Successful refresh of access token.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *       400:
+ *         description: No refresh token provided or invalid token.
+ *       500:
+ *         description: Internal server error.
  */
 export async function refreshAccessToken(
   req: Request,
