@@ -1,13 +1,26 @@
 import { IUser } from "../interfaces/user";
 import UserModel from "../models/user";
+
+import bcrypt from "bcrypt";
 import loggerWithNameSpace from "../utils/logger";
 
-const logger = loggerWithNameSpace("services:user");
+const logger = loggerWithNameSpace("service: user");
 
-export async function createUser(userToCreate: IUser) {
+export async function createUser(user: IUser) {
   logger.info("Creating a new user");
 
-  UserModel.create(userToCreate);
+  let newUser: IUser;
+
+  const hashSaltValue = 10;
+
+  const password = await bcrypt.hash(user.password, hashSaltValue);
+
+  newUser = {
+    ...user,
+    password,
+  };
+
+  return await UserModel.create(newUser);
 }
 
 export function getUsers() {

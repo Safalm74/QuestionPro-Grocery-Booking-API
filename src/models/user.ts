@@ -16,7 +16,7 @@ export default class UserModel extends BaseModel {
       password: data.password,
       phone: data.phone,
       address: data.address,
-      role_id: data.roleId,
+      role: data.role,
     };
 
     const query = this.queryBuilder()

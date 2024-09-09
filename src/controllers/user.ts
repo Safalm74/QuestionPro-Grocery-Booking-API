@@ -3,7 +3,7 @@ import HttpStatusCode from "http-status-codes";
 import loggerWithNameSpace from "../utils/logger";
 import * as UserService from "../services/user";
 
-const logger = loggerWithNameSpace("User Controller");
+const logger = loggerWithNameSpace("Controller: user");
 
 export async function createUser(
   req: Request,

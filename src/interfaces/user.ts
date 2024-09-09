@@ -5,7 +5,7 @@ export interface IUser {
   password: string;
   phone: string;
   address: string;
-  roleId?: string;
+  role: string;
 }
 
 export interface IGetUserQuery {
