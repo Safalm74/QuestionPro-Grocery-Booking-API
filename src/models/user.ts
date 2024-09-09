@@ -65,8 +65,10 @@ export default class UserModel extends BaseModel {
       .select("email", "password")
       .table(this.tableName)
       .where({ email: email });
+
     return query;
   }
+
   static async update(id: UUID, data: IUser) {
     const userToUpdate = {
       name: data.name,
