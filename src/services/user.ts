@@ -31,6 +31,12 @@ export async function getUsers(query: IGetUserQuery) {
   return UserModel.get(query);
 }
 
+export function getUserByEmail(email: string) {
+  logger.info("Getting a user by email");
+
+  return UserModel.getByEmail(email);
+}
+
 export async function updateUser(id: UUID, user: IUser) {
   logger.info("Updating a user");
 
