@@ -17,6 +17,7 @@ const config = {
     accessTokenExpiry: 600,
     refreshTokenExpiry: 3000,
   },
+  swaggerUrl: `http://localhost:${process.env.PORT || 8000}`,
   bcryptSalt: 10,
 };
 
