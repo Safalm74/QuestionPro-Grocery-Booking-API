@@ -6,6 +6,45 @@ import { UUID } from "crypto";
 
 const logger = loggerWithNameSpace("Controller: user");
 
+/**
+ * @swagger
+ * /user:
+ *   post:
+ *     tags: [User]
+ *     summary: Create a new user
+ *     description: Add a new user to the system
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: John Doe
+ *               email:
+ *                 type: string
+ *                 example: 9VnZv@example.com
+ *               password:
+ *                 type: string
+ *                 example: Aapple!123456
+ *               phone:
+ *                 type: string
+ *                 example: 123456789
+ *               address:
+ *                 type: string
+ *                 example: 123 Main St
+ *               role:
+ *                 type: string
+ *                 enum:
+ *                   - admin
+ *                   - user
+ *                 example: user
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ */
 export async function createUser(
   req: Request,
   res: Response,
@@ -23,6 +62,42 @@ export async function createUser(
   }
 }
 
+/**
+ * @swagger
+ * /user:
+ *   get:
+ *     tags: [User]
+ *     summary: Get all users
+ *     description: Retrieve a list of users, you can set page number with size
+ *     responses:
+ *       200:
+ *         description: A JSON array of user objects
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   role:
+ *                     type: string
+ *                   address:
+ *                     type: string
+ *                   phone:
+ *                     type: string
+ *                   created_at:
+ *                     type: string
+ *                   deleted_at:
+ *                     type: string
+ *                   updated_at:
+ *                     type: string
+ */
 export async function getUsers(
   req: Request,
   res: Response,
@@ -41,6 +116,52 @@ export async function getUsers(
   }
 }
 
+/**
+ * @swagger
+ * /user/{id}:
+ *   put:
+ *     tags: [User]
+ *     summary: Update a user
+ *     description: Modify details of an existing user
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user's unique ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: John Doe update
+ *               email:
+ *                 type: string
+ *                 example: 9VnZv@example.com
+ *               password:
+ *                 type: string
+ *                 example: Aapple!123456
+ *               phone:
+ *                 type: string
+ *                 example: 123456789
+ *               address:
+ *                 type: string
+ *                 example: 123 Main St
+ *               role:
+ *                 type: string
+ *                 enum:
+ *                   - admin
+ *                   - user
+ *                 example: user
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ */
 export async function updateUser(
   req: Request,
   res: Response,
@@ -58,6 +179,24 @@ export async function updateUser(
   }
 }
 
+/**
+ * @swagger
+ * /user/{id}:
+ *   delete:
+ *     tags: [User]
+ *     summary: Delete a user
+ *     description: Remove a user from the system
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user's unique ID
+ *     responses:
+ *       204:
+ *         description: User deleted successfully
+ */
 export async function deleteUser(
   req: Request,
   res: Response,

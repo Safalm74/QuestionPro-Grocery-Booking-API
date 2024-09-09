@@ -18,7 +18,17 @@ export default class UserModel extends BaseModel {
     const query = this.queryBuilder()
       .insert(userToCreate)
       .into(this.tableName)
-      .returning("*");
+      .returning([
+        "id",
+        "email",
+        "name",
+        "role",
+        "address",
+        "phone",
+        "created_at",
+        "deleted_at",
+        "updated_at",
+      ]);
 
     return await query;
   }
@@ -65,7 +75,17 @@ export default class UserModel extends BaseModel {
       .update(userToUpdate)
       .from(this.tableName)
       .where("id", id)
-      .returning("*");
+      .returning([
+        "id",
+        "email",
+        "name",
+        "role",
+        "address",
+        "phone",
+        "created_at",
+        "deleted_at",
+        "updated_at",
+      ]);
 
     return await query;
   }
@@ -75,7 +95,17 @@ export default class UserModel extends BaseModel {
       .update({ deleted_at: new Date() })
       .from(this.tableName)
       .where("id", id)
-      .returning("*");
+      .returning([
+        "id",
+        "email",
+        "name",
+        "role",
+        "address",
+        "phone",
+        "created_at",
+        "deleted_at",
+        "updated_at",
+      ]);
 
     return await query;
   }
