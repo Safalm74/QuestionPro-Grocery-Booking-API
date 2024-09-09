@@ -24,7 +24,19 @@ export default class UserModel extends BaseModel {
 
   static async get(filter: IGetUserQuery) {
     const { id: id, page, size } = filter;
-    const query = this.queryBuilder().select("*").table(this.tableName);
+    const query = this.queryBuilder()
+      .select(
+        "id",
+        "email",
+        "name",
+        "role",
+        "address",
+        "phone",
+        "created_at",
+        "deleted_at",
+        "updated_at"
+      )
+      .table(this.tableName);
 
     if (page && size) {
       query.limit(size!).offset((page! - 1) * size!);
