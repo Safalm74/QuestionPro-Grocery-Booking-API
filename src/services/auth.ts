@@ -76,3 +76,54 @@ export async function login(body: Pick<IUser, "email" | "password">) {
   //returning access and refresh token
   return responsePayload;
 }
+
+/**
+ * Service function to generate new access token from valid refresh token
+ * @param RefreshToken
+ * @returns new access token
+ */
+export async function refreshAccessToken(RefreshToken: string) {
+  const token = RefreshToken.split(" ");
+
+  /*
+      the incoming token must have format of:
+        "Bearer <token>"
+      to ensure this, 
+      refresh token is splitted by (" ")
+      then checked if token[0]==="Bearer"
+      and splitted token is of length 2
+    */
+  if (token?.length !== 2 || token[0] !== "Bearer") {
+    logger.error(`token format mismatch: ${token}`);
+
+    throw new UnauthicatedError("Un-Authenticated");
+  }
+
+  logger.info(`Verifying refresh token`);
+  //JWT verify verifies the token and returns decoded token  if verified
+  const existingUserPayload = verify(
+    token[1],
+    config.jwt.jwt_secret!
+  ) as ITokenPlayLoad;
+
+  //creating payload to generate new access token
+  logger.info("creating payload");
+
+  //creating payload to generate tokens
+  const payload: ITokenPlayLoad = {
+    id: existingUserPayload.id,
+    name: existingUserPayload.name,
+    email: existingUserPayload.email,
+    role: existingUserPayload.role,
+  };
+
+  //generating access token using config jwt secret
+  logger.info("creating access token");
+
+  const accessToken = await sign(payload, config.jwt.jwt_secret!, {
+    expiresIn: config.jwt.accessTokenExpiry,
+  });
+
+  //returning access token
+  return { accessToken };
+}
