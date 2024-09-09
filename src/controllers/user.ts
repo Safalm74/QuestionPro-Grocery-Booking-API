@@ -58,6 +58,18 @@ export async function updateUser(
   }
 }
 
-export function deleteUser(req: Request, res: Response) {
-  res.send("Hello World! from delete user");
+export async function deleteUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = req.params as { id: UUID };
+
+    res
+      .status(HttpStatusCode.NO_CONTENT)
+      .json(await UserService.deleteUser(id));
+  } catch (error) {
+    next(error);
+  }
 }

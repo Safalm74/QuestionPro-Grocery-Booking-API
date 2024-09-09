@@ -70,12 +70,13 @@ export default class UserModel extends BaseModel {
     return await query;
   }
 
-  static async delete(id: number) {
+  static async delete(id: UUID) {
     const query = this.queryBuilder()
-      .delete()
+      .update({ deleted_at: new Date() })
       .from(this.tableName)
       .where("id", id)
       .returning("*");
+
     return await query;
   }
 }

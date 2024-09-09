@@ -26,16 +26,22 @@ export async function createUser(user: IUser) {
 }
 
 export async function getUsers(query: IGetUserQuery) {
+  logger.info("Getting all users");
+
   return UserModel.get(query);
 }
 
 export async function updateUser(id: UUID, user: IUser) {
+  logger.info("Updating a user");
+
   const password = await bcrypt.hash(user.password, config.bcryptSalt);
   user.password = password;
 
   return await UserModel.update(id, user);
 }
 
-export function deleteUser() {
+export async function deleteUser(id: UUID) {
   logger.info("Deleting a user");
+
+  return UserModel.delete(id);
 }
