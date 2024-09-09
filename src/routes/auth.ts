@@ -13,6 +13,6 @@ router.post(
 );
 
 // //Route to handle new access token from refresh token
-router.get("/refreshAccessToken", AuthController.refreshAccessToken);
+router.post("/refreshAccessToken", AuthController.refreshAccessToken);
 
 export default router;
