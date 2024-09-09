@@ -10,4 +10,5 @@ app.use(express.json());
 //Middleware to handle API requests
 app.use(router);
 
+//Start server
 app.listen(config.port, () => console.log(`Listening in port: ${config.port}`));
