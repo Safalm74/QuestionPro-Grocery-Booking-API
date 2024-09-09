@@ -22,7 +22,21 @@ export async function createUser(
   }
 }
 
-export function getUsers(req: Request, res: Response, next: NextFunction) {}
+export async function getUsers(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { query } = req;
+
+    const data = await UserService.getUsers(query);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export function updateUser(req: Request, res: Response) {
   res.send("Hello World! from update user");

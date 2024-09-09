@@ -1,4 +1,4 @@
-import { IUser } from "../interfaces/user";
+import { IGetUserQuery, IUser } from "../interfaces/user";
 import UserModel from "../models/user";
 
 import bcrypt from "bcrypt";
@@ -23,8 +23,8 @@ export async function createUser(user: IUser) {
   return await UserModel.create(newUser);
 }
 
-export function getUsers() {
-  logger.info("Fetching all users");
+export async function getUsers(query: IGetUserQuery) {
+  return UserModel.get(query);
 }
 
 export function updateUser() {

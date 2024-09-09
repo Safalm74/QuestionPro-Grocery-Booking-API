@@ -1,13 +1,8 @@
-import { IUser } from "../interfaces/user";
+import { IGetUserQuery, IUser } from "../interfaces/user";
 import BaseModel from "./base";
 
 export default class UserModel extends BaseModel {
   static tableName = "users";
-
-  static get() {
-    const query = this.queryBuilder().select("*").from(this.tableName);
-    return query;
-  }
 
   static async create(data: IUser) {
     const userToCreate = {
@@ -25,6 +20,21 @@ export default class UserModel extends BaseModel {
       .returning("*");
 
     return await query;
+  }
+
+  static async get(filter: IGetUserQuery) {
+    const { id: id, page, size } = filter;
+    const query = this.queryBuilder().select("*").table(this.tableName);
+
+    if (page && size) {
+      query.limit(size!).offset((page! - 1) * size!);
+    }
+
+    if (id) {
+      query.where({ id: id });
+    }
+
+    return query;
   }
 
   static async update(id: number, data: any) {
