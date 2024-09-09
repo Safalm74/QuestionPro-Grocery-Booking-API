@@ -45,6 +45,8 @@ export const createUserBodySchema = Joi.object({
       if (!roles.includes(value)) {
         return helpers.error("role.not_defined");
       }
+
+      return value;
     }),
   email: Joi.string().email().required().messages({
     "string.email": "Email must be a valid format",
@@ -101,6 +103,8 @@ export const updateUserBodySchema = Joi.object({
       if (!roles.includes(value)) {
         return helpers.error("role.not_defined");
       }
+
+      return value;
     }),
   email: Joi.string().email().optional().messages({
     "string.email": "Email must be a valid format",
