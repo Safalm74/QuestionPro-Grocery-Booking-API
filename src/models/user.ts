@@ -1,3 +1,4 @@
+import { UUID } from "crypto";
 import { IGetUserQuery, IUser } from "../interfaces/user";
 import BaseModel from "./base";
 
@@ -49,14 +50,15 @@ export default class UserModel extends BaseModel {
     return query;
   }
 
-  static async update(id: number, data: any) {
+  static async update(id: UUID, data: IUser) {
     const userToUpdate = {
       name: data.name,
       email: data.email,
       password: data.password,
       phone: data.phone,
       address: data.address,
-      role_id: data.roleId,
+      role: data.role,
+      updated_at: new Date(),
     };
 
     const query = this.queryBuilder()

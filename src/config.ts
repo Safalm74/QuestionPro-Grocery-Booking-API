@@ -17,6 +17,7 @@ const config = {
     accessTokenExpiry: 600,
     refreshTokenExpiry: 3000,
   },
+  bcryptSalt: 10,
 };
 
 export default config;

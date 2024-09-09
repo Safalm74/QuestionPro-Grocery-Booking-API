@@ -3,6 +3,8 @@ import UserModel from "../models/user";
 
 import bcrypt from "bcrypt";
 import loggerWithNameSpace from "../utils/logger";
+import { UUID } from "crypto";
+import config from "../config";
 
 const logger = loggerWithNameSpace("service: user");
 
@@ -27,8 +29,11 @@ export async function getUsers(query: IGetUserQuery) {
   return UserModel.get(query);
 }
 
-export function updateUser() {
-  logger.info("Updating a user");
+export async function updateUser(id: UUID, user: IUser) {
+  const password = await bcrypt.hash(user.password, config.bcryptSalt);
+  user.password = password;
+
+  return await UserModel.update(id, user);
 }
 
 export function deleteUser() {

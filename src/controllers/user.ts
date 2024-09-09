@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import HttpStatusCode from "http-status-codes";
 import loggerWithNameSpace from "../utils/logger";
 import * as UserService from "../services/user";
+import { UUID } from "crypto";
 
 const logger = loggerWithNameSpace("Controller: user");
 
@@ -27,6 +28,8 @@ export async function getUsers(
   res: Response,
   next: NextFunction
 ) {
+  logger.info("Request: read users");
+
   try {
     const { query } = req;
 
@@ -38,8 +41,21 @@ export async function getUsers(
   }
 }
 
-export function updateUser(req: Request, res: Response) {
-  res.send("Hello World! from update user");
+export async function updateUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  logger.info("Request: update user");
+
+  try {
+    const { body } = req;
+    const { id } = req.params as { id: UUID };
+
+    res.status(HttpStatusCode.OK).json(await UserService.updateUser(id, body));
+  } catch (error) {
+    next(error);
+  }
 }
 
 export function deleteUser(req: Request, res: Response) {
