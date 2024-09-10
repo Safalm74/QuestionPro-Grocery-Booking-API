@@ -1,3 +1,4 @@
+import { UUID } from "crypto";
 import { IGrocery, IGroceryQuery } from "../interfaces/grocery";
 import { GroceryModel } from "../models/grocery";
 import loggerWithNameSpace from "../utils/logger";
@@ -33,6 +34,8 @@ export async function getGroceries(filter: IGroceryQuery) {
   });
 }
 
-export function updateGrocery() {}
+export async function updateGrocery(id: UUID, data: IGrocery) {
+  return await GroceryModel.update(id, data);
+}
 
 export function deleteGrocery() {}

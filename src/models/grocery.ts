@@ -1,3 +1,4 @@
+import { UUID } from "crypto";
 import { IGrocery, IGroceryQuery } from "../interfaces/grocery";
 import BaseModel from "./base";
 
@@ -35,7 +36,21 @@ export class GroceryModel extends BaseModel {
     return await query;
   }
 
-  static async update() {}
+  static async update(id: UUID, data: IGrocery) {
+    const groceryToUpdate = {
+      name: data.name,
+      description: data.description,
+      price: data.price,
+      quantity: data.quantity,
+    };
+    const query = this.queryBuilder()
+      .update(groceryToUpdate)
+      .table(this.tableName)
+      .where({ id })
+      .returning("*");
 
-  static async delete() {}
+    return await query;
+  }
+
+  static async delete(id: UUID) {}
 }

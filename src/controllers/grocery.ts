@@ -5,6 +5,7 @@ import HttpStatusCode from "http-status-codes";
 import loggerWithNameSpace from "../utils/logger";
 import { BadRequestError } from "../error/BadRequestError";
 import { IGroceryQuery } from "../interfaces/grocery";
+import { UUID } from "crypto";
 
 const logger = loggerWithNameSpace("Grocery Controller");
 
@@ -65,9 +66,9 @@ export async function updateGrocery(
 ) {
   logger.info("Request: updateGrocery");
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: UUID };
     const { body } = req;
-    const data = await GroceryService.updateGrocery();
+    const data = await GroceryService.updateGrocery(id, body);
     res.status(HttpStatusCode.OK).json(data);
   } catch (error) {
     next(error);
