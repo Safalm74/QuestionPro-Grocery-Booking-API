@@ -1,7 +1,8 @@
+import { UUID } from "crypto";
 import { IBaseQuery } from "./baseQuery";
 
 export interface IUser {
-  id?: string;
+  id?: UUID;
   name: string;
   email: string;
   password: string;
