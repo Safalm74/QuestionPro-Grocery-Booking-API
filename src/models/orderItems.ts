@@ -12,7 +12,6 @@ export class OrderItemsModel extends BaseModel {
         groceryId: item.groceryId,
         quantity: item.quantity,
         pricePerUnit: item.pricePerUnit,
-        createdBy: item.createdBy,
       };
     });
 
@@ -40,7 +39,7 @@ export class OrderItemsModel extends BaseModel {
       groceryId: data.groceryId,
       quantity: data.quantity,
       pricePerUnit: data.pricePerUnit,
-      UpdatedBy: data.updatedBy,
+      UpdatedAt: new Date(),
     };
 
     const query = this.queryBuilder()
