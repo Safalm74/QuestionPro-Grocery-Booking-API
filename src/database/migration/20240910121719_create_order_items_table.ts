@@ -20,19 +20,6 @@ export async function up(knex: Knex): Promise<void> {
     table.integer("quantity").notNullable();
     table.integer("price_per_unit").notNullable();
     table.timestamp("created_at").notNullable().defaultTo(knex.raw("now()"));
-    table
-      .uuid("created_by")
-      .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("users");
-    table.timestamp("updated_at").nullable();
-    table
-      .uuid("updated_by")
-      .unsigned()
-      .references("id")
-      .inTable("users")
-      .nullable();
     table.timestamp("deleted_at").nullable();
   });
 }
