@@ -20,7 +20,6 @@ export async function up(knex: Knex): Promise<void> {
     table.integer("quantity").notNullable();
     table.integer("price_per_unit").notNullable();
     table.timestamp("created_at").notNullable().defaultTo(knex.raw("now()"));
-    table.timestamp("deleted_at").nullable();
   });
 }
 
