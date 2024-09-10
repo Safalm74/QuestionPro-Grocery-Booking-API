@@ -20,7 +20,7 @@ export async function getGroceries(filter: IGroceryQuery) {
 
   let data = await GroceryModel.get(filter);
   data = data.filter((grocery) => {
-    return grocery.quantity > 0 && !grocery.deleted_at;
+    return grocery.quantity > 0 && !grocery.deletedAt;
   });
 
   return data.map((grocery) => {
