@@ -1,3 +1,5 @@
+import { IBaseQuery } from "./baseQuery";
+
 export interface IGrocery {
   id?: string;
   name: string;
@@ -5,3 +7,5 @@ export interface IGrocery {
   price: number;
   quantity: number;
 }
+
+export interface IGroceryQuery extends IBaseQuery {}

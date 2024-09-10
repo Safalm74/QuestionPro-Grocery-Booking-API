@@ -1,3 +1,5 @@
+import { IBaseQuery } from "./baseQuery";
+
 export interface IUser {
   id?: string;
   name: string;
@@ -8,8 +10,4 @@ export interface IUser {
   role: string;
 }
 
-export interface IGetUserQuery {
-  id?: string;
-  page?: number;
-  size?: number;
-}
+export interface IGetUserQuery extends IBaseQuery {}

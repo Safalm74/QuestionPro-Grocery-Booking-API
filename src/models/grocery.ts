@@ -1,4 +1,4 @@
-import { IGrocery } from "../interfaces/grocery";
+import { IGrocery, IGroceryQuery } from "../interfaces/grocery";
 import BaseModel from "./base";
 
 export class GroceryModel extends BaseModel {
@@ -20,7 +20,20 @@ export class GroceryModel extends BaseModel {
     return await query;
   }
 
-  static async get() {}
+  static async get(filter: IGroceryQuery) {
+    const { id: id, page, size } = filter;
+    const query = this.queryBuilder().select("*").table(this.tableName);
+
+    if (page && size) {
+      query.limit(size!).offset((page! - 1) * size!);
+    }
+
+    if (id) {
+      query.where({ id: id });
+    }
+
+    return await query;
+  }
 
   static async update() {}
 
