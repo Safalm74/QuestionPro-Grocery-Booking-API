@@ -82,8 +82,8 @@ export async function deleteGrocery(
 ) {
   logger.info("Request: deleteGrocery");
   try {
-    const { id } = req.params;
-    const data = await GroceryService.deleteGrocery();
+    const { id } = req.params as { id: UUID };
+    const data = await GroceryService.deleteGrocery(id);
     res.status(HttpStatusCode.OK).json(data);
   } catch (error) {
     next(error);

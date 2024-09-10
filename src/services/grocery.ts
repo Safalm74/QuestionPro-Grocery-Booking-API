@@ -38,4 +38,6 @@ export async function updateGrocery(id: UUID, data: IGrocery) {
   return await GroceryModel.update(id, data);
 }
 
-export function deleteGrocery() {}
+export async function deleteGrocery(id: UUID) {
+  return await GroceryModel.delete(id);
+}

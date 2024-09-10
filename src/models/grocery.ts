@@ -52,5 +52,13 @@ export class GroceryModel extends BaseModel {
     return await query;
   }
 
-  static async delete(id: UUID) {}
+  static async delete(id: UUID) {
+    const query = this.queryBuilder()
+      .update({ deleted_at: new Date() })
+      .table(this.tableName)
+      .where({ id })
+      .returning("*");
+
+    return await query;
+  }
 }
