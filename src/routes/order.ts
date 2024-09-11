@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.post("/", authenticate, orderController.createOrder);
 
-router.get("/", orderController.getOrder);
+router.get("/", authenticate, orderController.getOrder);
 
-router.put("/:id", orderController.updateOrder);
+router.put("/:id", authenticate, orderController.updateOrder);
 
-router.delete("/:id", orderController.deleteOrder);
+router.delete("/:id", authenticate, orderController.deleteOrder);
 
 export default router;

@@ -1,5 +1,5 @@
 import { UUID } from "crypto";
-import { IOrder } from "../interfaces/order";
+import { IOrder, IOrderQuery } from "../interfaces/order";
 import { OrderModel } from "../models/order";
 import * as orderItemService from "./orderItem";
 import { getGroceries, updateQuantity } from "./grocery";
@@ -35,4 +35,9 @@ export async function createOrder(data: IOrder, userId: UUID) {
   await orderItemService.create(orderItems);
 
   return order;
+}
+
+export async function getOrder(filter: IOrderQuery, userId?: UUID) {
+  filter.userId = userId;
+  return await OrderModel.get(filter);
 }

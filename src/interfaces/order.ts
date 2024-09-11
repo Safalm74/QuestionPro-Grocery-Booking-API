@@ -13,4 +13,6 @@ export interface IOrder {
   updatedBy?: string;
 }
 
-export interface IOrderQuery extends IBaseQuery {}
+export interface IOrderQuery extends IBaseQuery {
+  userId?: UUID;
+}
