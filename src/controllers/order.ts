@@ -1,8 +1,9 @@
 import * as OrderServices from "../services/order";
 import { Response, NextFunction } from "express";
 import { Request } from "../interfaces/auth";
-import { IOrderQuery } from "../interfaces/order";
+import { IOrder, IOrderQuery } from "../interfaces/order";
 import HttpStatusCode from "http-status-codes";
+import { UUID } from "crypto";
 
 export async function createOrder(
   req: Request,
@@ -56,8 +57,13 @@ export async function updateOrder(
   next: NextFunction
 ) {
   try {
-    const { id } = req.params;
-    const { body } = req;
+    const { id } = req.params as { id: UUID };
+    const status = req.body as Pick<IOrder, "status" | "updatedBy">;
+    const userId = req.user!.id! as UUID;
+
+    const data = await OrderServices.updateStatus(id, status, userId);
+
+    res.status(HttpStatusCode.OK).json(data);
   } catch (error) {
     next(error);
   }

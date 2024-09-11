@@ -8,7 +8,7 @@ router.post("/", authenticate, orderController.createOrder);
 
 router.get("/", authenticate, orderController.getOrder);
 
-router.put("/:id", authenticate, orderController.updateOrder);
+router.patch("/:id", authenticate, orderController.updateOrder);
 
 router.delete("/:id", authenticate, orderController.deleteOrder);
 

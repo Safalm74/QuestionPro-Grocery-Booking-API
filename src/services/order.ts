@@ -41,3 +41,12 @@ export async function getOrder(filter: IOrderQuery, userId?: UUID) {
   filter.userId = userId;
   return await OrderModel.get(filter);
 }
+
+export async function updateStatus(
+  id: UUID,
+  data: Pick<IOrder, "status" | "updatedBy">,
+  userId: UUID
+) {
+  data.updatedBy = userId;
+  return await OrderModel.update(id, data);
+}

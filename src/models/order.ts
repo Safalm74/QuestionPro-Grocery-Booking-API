@@ -33,16 +33,19 @@ export class OrderModel extends BaseModel {
     return await query;
   }
 
-  static async update(id: UUID, data: IOrder) {
+  static async update(id: UUID, data: Pick<IOrder, "status" | "updatedBy">) {
     const orderToUpdate = {
       status: data.status,
       updatedBy: data.updatedBy,
+      updatedAt: new Date(),
     };
     const query = this.queryBuilder()
       .update(orderToUpdate)
       .table(this.tableName)
       .where({ id })
       .returning("*");
+
+    return await query;
   }
 
   static async delete(id: UUID) {
