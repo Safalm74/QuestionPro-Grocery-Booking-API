@@ -75,5 +75,11 @@ export async function deleteOrder(
   next: NextFunction
 ) {
   try {
-  } catch (error) {}
+    const { id } = req.params as { id: UUID };
+
+    const data = await OrderServices.deleteOrder(id);
+    res.status(HttpStatusCode.OK).json(data);
+  } catch (error) {
+    next(error);
+  }
 }

@@ -50,3 +50,7 @@ export async function updateStatus(
   data.updatedBy = userId;
   return await OrderModel.update(id, data);
 }
+
+export async function deleteOrder(id: UUID) {
+  return await OrderModel.delete(id);
+}
