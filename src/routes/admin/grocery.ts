@@ -9,6 +9,7 @@ import {
   getGroceryQuerySchema,
   groceryBodySchema,
   groceryParamSchema,
+  groceryQuantityBodySchema,
 } from "../../schema/grocery";
 
 const router = express();
@@ -30,6 +31,13 @@ router.put(
   validateReqParams(groceryParamSchema),
   validateReqBody(groceryBodySchema),
   GroceryController.updateGrocery
+);
+
+router.patch(
+  "/quantity/:id",
+  validateReqParams(groceryParamSchema),
+  validateReqBody(groceryQuantityBodySchema),
+  GroceryController.updateQuantity
 );
 
 router.delete(
