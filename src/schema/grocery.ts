@@ -45,3 +45,12 @@ export const groceryBodySchema = Joi.object({
 }).options({
   stripUnknown: true,
 });
+
+//schema to update grocery quantity
+export const groceryQuantityBodySchema = Joi.object({
+  quantity: Joi.number().required().messages({
+    "any.required": "Quantity is required",
+  }),
+}).options({
+  stripUnknown: true,
+});

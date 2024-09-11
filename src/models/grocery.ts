@@ -36,6 +36,15 @@ export class GroceryModel extends BaseModel {
     return await query;
   }
 
+  static async updateQuantity(id: UUID, quantity: number) {
+    const query = this.queryBuilder()
+      .update({ quantity })
+      .table(this.tableName)
+      .where({ id })
+      .returning("*");
+
+    return await query;
+  }
   static async update(id: UUID, data: IGrocery) {
     const groceryToUpdate = {
       name: data.name,

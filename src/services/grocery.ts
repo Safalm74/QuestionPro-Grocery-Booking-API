@@ -38,6 +38,12 @@ export async function updateGrocery(id: UUID, data: IGrocery) {
   return await GroceryModel.update(id, data);
 }
 
+export async function updateQuantity(id: UUID, quantity: number) {
+  logger.info("Updating grocery quantity");
+
+  return await GroceryModel.updateQuantity(id, quantity);
+}
+
 export async function deleteGrocery(id: UUID) {
   return await GroceryModel.delete(id);
 }

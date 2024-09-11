@@ -51,8 +51,6 @@ export async function getGroceriesForAdmin(
     const filter = req.query as IGroceryQuery;
     const data = await GroceryService.getGroceriesForAdmin(filter);
 
-    console.log(data);
-
     res.status(HttpStatusCode.OK).json(data);
   } catch (error) {
     next(error);
@@ -69,6 +67,23 @@ export async function updateGrocery(
     const { id } = req.params as { id: UUID };
     const { body } = req;
     const data = await GroceryService.updateGrocery(id, body);
+    res.status(HttpStatusCode.OK).json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function updateQuantity(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  logger.info("Request: updateQuantity");
+  try {
+    const { id } = req.params as { id: UUID };
+    const { body } = req;
+    const data = await GroceryService.updateQuantity(id, body.quantity);
+
     res.status(HttpStatusCode.OK).json(data);
   } catch (error) {
     next(error);
