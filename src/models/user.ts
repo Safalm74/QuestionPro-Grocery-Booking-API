@@ -62,7 +62,7 @@ export default class UserModel extends BaseModel {
 
   static getByEmail(email: string) {
     const query = this.queryBuilder()
-      .select("email", "password")
+      .select("email", "password", "role", "id")
       .table(this.tableName)
       .where({ email: email });
 
