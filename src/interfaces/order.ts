@@ -1,9 +1,11 @@
 import { UUID } from "crypto";
 import { IBaseQuery } from "./baseQuery";
+import { IOrderItems } from "./orderItem";
 
 export interface IOrder {
   id?: UUID;
-  status: string;
+  status?: "pending" | "completed" | "cancelled";
+  items: IOrderItems[];
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;

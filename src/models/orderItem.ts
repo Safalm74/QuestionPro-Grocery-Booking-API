@@ -1,5 +1,5 @@
 import { UUID } from "crypto";
-import { IOrderItems } from "../interfaces/orderItems";
+import { IOrderItems } from "../interfaces/orderItem";
 import BaseModel from "./base";
 
 export class OrderItemsModel extends BaseModel {

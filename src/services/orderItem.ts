@@ -1,6 +1,6 @@
 import { UUID } from "crypto";
-import { IOrderItems } from "../interfaces/orderItems";
-import { OrderItemsModel } from "../models/orderItems";
+import { IOrderItems } from "../interfaces/orderItem";
+import { OrderItemsModel } from "../models/orderItem";
 
 export async function create(data: IOrderItems[]) {
   return await OrderItemsModel.create(data);
