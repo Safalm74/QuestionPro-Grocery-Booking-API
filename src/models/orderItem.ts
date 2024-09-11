@@ -23,11 +23,15 @@ export class OrderItemsModel extends BaseModel {
     const result = await query;
   }
 
-  static async get(id?: UUID) {
+  static async get(id?: UUID, orderId?: UUID) {
     const query = this.queryBuilder().select("*").table(this.tableName);
 
     if (id) {
       query.where({ id });
+    }
+
+    if (orderId) {
+      query.where({ orderId });
     }
 
     return await query;

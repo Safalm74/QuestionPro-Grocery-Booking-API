@@ -6,8 +6,8 @@ export async function create(data: IOrderItems[]) {
   return await OrderItemsModel.create(data);
 }
 
-export async function get(id?: UUID) {
-  return await OrderItemsModel.get(id);
+export async function get(id?: UUID, orderId?: UUID) {
+  return await OrderItemsModel.get(id, orderId);
 }
 
 export async function update(id: UUID, data: IOrderItems) {
