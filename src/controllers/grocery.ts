@@ -89,6 +89,8 @@ export async function createGrocery(
  *         description: List of groceries
  *       400:
  *         description: Bad request
+ *       404:
+ *         description: Not found
  */
 export async function getGrocery(
   req: Request,
@@ -134,6 +136,8 @@ export async function getGrocery(
  *         description: List of groceries for admin
  *       400:
  *         description: Bad request
+ *       404:
+ *         description: Not found
  */
 export async function getGroceriesForAdmin(
   req: Request,
@@ -193,6 +197,8 @@ export async function getGroceriesForAdmin(
  *         description: Grocery item updated successfully
  *       400:
  *         description: Bad request
+ *       404:
+ *         description: Not found
  */
 export async function updateGrocery(
   req: Request,
@@ -239,6 +245,8 @@ export async function updateGrocery(
  *         description: Quantity updated successfully
  *       400:
  *         description: Bad request
+ *       404:
+ *         description: Not found
  */
 export async function updateQuantity(
   req: Request,
@@ -277,6 +285,8 @@ export async function updateQuantity(
  *         description: Grocery item deleted successfully
  *       400:
  *         description: Bad request
+ *       404:
+ *         description: Not found
  */
 export async function deleteGrocery(
   req: Request,
