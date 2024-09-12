@@ -76,7 +76,6 @@ export default class UserModel extends BaseModel {
       password: data.password,
       phone: data.phone,
       address: data.address,
-      role: data.role,
       updated_at: new Date(),
     };
 

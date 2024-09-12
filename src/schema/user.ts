@@ -1,7 +1,5 @@
 import Joi from "joi";
 
-const roles = ["admin", "user"];
-
 //Schema to get id from params
 export const userParamSchema = Joi.object({
   id: Joi.string().uuid().required().messages({
@@ -35,19 +33,6 @@ export const createUserBodySchema = Joi.object({
   name: Joi.string().required().messages({
     "any.required": "Name is required",
   }),
-  role: Joi.string()
-    .required()
-    .messages({
-      "any.required": "role is required",
-      "role.not_defined": "Possible roles: admin and user",
-    })
-    .custom((value, helpers) => {
-      if (!roles.includes(value)) {
-        return helpers.error("role.not_defined");
-      }
-
-      return value;
-    }),
   email: Joi.string().email().required().messages({
     "string.email": "Email must be a valid format",
     "any.required": "Email is required",
@@ -93,19 +78,6 @@ export const updateUserBodySchema = Joi.object({
   name: Joi.string().optional().messages({
     "any.required": "Last name is required",
   }),
-  role: Joi.string()
-    .optional()
-    .messages({
-      "any.required": "role is required",
-      "role.not_defined": "Possible roles: super_user and user",
-    })
-    .custom((value, helpers) => {
-      if (!roles.includes(value)) {
-        return helpers.error("role.not_defined");
-      }
-
-      return value;
-    }),
   email: Joi.string().email().optional().messages({
     "string.email": "Email must be a valid format",
     "any.required": "Email is required",

@@ -29,6 +29,9 @@ export async function createUser(user: IUser) {
     password,
   };
 
+  //default role
+  newUser.role = "user";
+
   return await UserModel.create(newUser);
 }
 

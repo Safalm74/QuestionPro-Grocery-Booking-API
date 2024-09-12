@@ -8,7 +8,7 @@ export interface IUser {
   password: string;
   phone: string;
   address: string;
-  role: string;
+  role?: string;
 }
 
 export interface IGetUserQuery extends IBaseQuery {}
