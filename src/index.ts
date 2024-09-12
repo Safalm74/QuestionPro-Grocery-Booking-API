@@ -6,9 +6,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { requestLogger } from "./middlewares/logger";
 import { genericErrorHandler, notFoundError } from "./middlewares/errorHandler";
+import helmet from "helmet";
 
 const app = express();
 
+//Middleware to add security level
+app.use(helmet());
+
+//Middleware to enable cors
 app.use(cors());
 
 // Use the Swagger UI middleware
