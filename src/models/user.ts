@@ -2,9 +2,20 @@ import { UUID } from "crypto";
 import { IGetUserQuery, IUser } from "../interfaces/user";
 import BaseModel from "./base";
 
+/**
+ * UserModel class provides methods for interacting with the users table in the database.
+ * It extends the BaseModel class to inherit database connection methods.
+ */
 export default class UserModel extends BaseModel {
+  //table name
   static tableName = "users";
 
+  /**
+   * Creates a new user in the database.
+   *
+   * @param {IUser} data - The user data to be created.
+   * @returns {Promise<any>} The created user record.
+   */
   static async create(data: IUser) {
     const userToCreate = {
       name: data.name,
@@ -33,6 +44,12 @@ export default class UserModel extends BaseModel {
     return await query;
   }
 
+  /**
+   * Retrieves users from the database based on the provided filters.
+   *
+   * @param {IGetUserQuery} filter - The filters to apply when retrieving users.
+   * @returns {Promise<{ data: any[]; total: number }>} The retrieved users and total count.
+   */
   static async get(filter: IGetUserQuery) {
     const { id: id, page, size } = filter;
     const query = this.queryBuilder()
@@ -49,10 +66,12 @@ export default class UserModel extends BaseModel {
       )
       .table(this.tableName);
 
+    // Apply pagination if page and size are provided
     if (page && size) {
       query.limit(size!).offset((page! - 1) * size!);
     }
 
+    // Filter by ID if provided
     if (id) {
       query.where({ id: id });
     }
@@ -65,6 +84,12 @@ export default class UserModel extends BaseModel {
     return data;
   }
 
+  /**
+   * Retrieves a user by their email address.
+   *
+   * @param {string} email - The email address of the user.
+   * @returns {Promise<any>} The user record with the specified email.
+   */
   static getByEmail(email: string) {
     const query = this.queryBuilder()
       .select("email", "password", "role", "id", "name")
@@ -74,6 +99,13 @@ export default class UserModel extends BaseModel {
     return query;
   }
 
+  /**
+   * Updates an existing user's information.
+   *
+   * @param {UUID} id - The ID of the user to update.
+   * @param {IUser} data - The new data for the user.
+   * @returns {Promise<any>} The updated user record.
+   */
   static async update(id: UUID, data: IUser) {
     const userToUpdate = {
       name: data.name,
@@ -103,6 +135,12 @@ export default class UserModel extends BaseModel {
     return await query;
   }
 
+  /**
+   * Marks a user as deleted by setting the deleted_at timestamp.
+   *
+   * @param {UUID} id - The ID of the user to delete.
+   * @returns {Promise<any>} The updated user record.
+   */
   static async delete(id: UUID) {
     const query = this.queryBuilder()
       .update({ deleted_at: new Date() })
