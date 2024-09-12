@@ -5,6 +5,38 @@ import { IOrder, IOrderQuery } from "../interfaces/order";
 import HttpStatusCode from "http-status-codes";
 import { UUID } from "crypto";
 
+/**
+ * @swagger
+ * /order:
+ *   post:
+ *     summary: Create a new order
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               items:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     orderId:
+ *                       type: string
+ *                       description: ID of the order item
+ *                     quantity:
+ *                       type: integer
+ *                       example: 2
+ *     responses:
+ *       201:
+ *         description: Order created successfully
+ *       500:
+ *         description: Internal server error
+ */
 export async function createOrder(
   req: Request,
   res: Response,
@@ -20,6 +52,36 @@ export async function createOrder(
   }
 }
 
+/**
+ * @swagger
+ * /admin/order:
+ *   get:
+ *     summary: Get orders for admin
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         description: Filter by order ID
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: number
+ *         description: Pagination page number
+ *       - in: query
+ *         name: size
+ *         schema:
+ *           type: number
+ *         description: Number of items per page
+ *     responses:
+ *       200:
+ *         description: List of orders
+ *       500:
+ *         description: Internal server error
+ */
 export async function getAdminOrder(
   req: Request,
   res: Response,
@@ -35,6 +97,36 @@ export async function getAdminOrder(
   }
 }
 
+/**
+ * @swagger
+ * /order:
+ *   get:
+ *     summary: Get orders for a user
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         description: Filter by order ID
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: number
+ *         description: Pagination page number
+ *       - in: query
+ *         name: size
+ *         schema:
+ *           type: number
+ *         description: Number of items per page
+ *     responses:
+ *       200:
+ *         description: List of orders
+ *       500:
+ *         description: Internal server error
+ */
 export async function getOrder(
   req: Request,
   res: Response,
@@ -51,6 +143,39 @@ export async function getOrder(
   }
 }
 
+/**
+ * @swagger
+ * /order/{id}:
+ *   patch:
+ *     summary: Update order status
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Order ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 description: Updated order status
+ *     responses:
+ *       200:
+ *         description: Order updated successfully
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
 export async function updateOrder(
   req: Request,
   res: Response,
@@ -69,6 +194,29 @@ export async function updateOrder(
   }
 }
 
+/**
+ * @swagger
+ * /order/{id}:
+ *   delete:
+ *     summary: Delete an order
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Order ID
+ *     responses:
+ *       200:
+ *         description: Order deleted successfully
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
 export async function deleteOrder(
   req: Request,
   res: Response,

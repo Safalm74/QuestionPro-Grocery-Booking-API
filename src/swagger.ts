@@ -15,7 +15,22 @@ const swaggerOptions = {
         url: config.swaggerUrl,
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+      security: [
+        {
+          bearerAuth: [],
+        },
+      ],
+    },
   },
+
   apis: ["./src/controllers/*.ts"],
 };
 
