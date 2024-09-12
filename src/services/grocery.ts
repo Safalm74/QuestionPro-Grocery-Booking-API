@@ -16,7 +16,7 @@ export function createGrocery(data: IGrocery, userId: UUID) {
 export async function getGroceriesForAdmin(filter: IGroceryQuery) {
   logger.info("Getting all groceries for admin");
 
-  const data = await GroceryModel.get(filter);
+  const data = (await GroceryModel.get(filter)).data;
 
   if (filter.id && !data[0]) {
     throw new NotFoundError("Grocery does not exist");
@@ -28,7 +28,7 @@ export async function getGroceriesForAdmin(filter: IGroceryQuery) {
 export async function getGroceries(filter: IGroceryQuery) {
   logger.info("Getting all groceries");
 
-  let data = await GroceryModel.get(filter);
+  let data = (await GroceryModel.get(filter)).data;
 
   if (filter.id && !data[0]) {
     throw new NotFoundError("Grocery does not exist");
@@ -69,7 +69,7 @@ export async function getGroceries(filter: IGroceryQuery) {
 export async function updateGrocery(id: UUID, data: IGrocery, userId: UUID) {
   logger.info("Updating grocery");
 
-  const existingGrocery = (await GroceryModel.get({ id }))[0];
+  const existingGrocery = (await GroceryModel.get({ id })).data[0];
 
   if (!existingGrocery || existingGrocery.deletedAt) {
     throw new NotFoundError("Grocery does not exist");
@@ -85,7 +85,7 @@ export async function updateQuantity(id: UUID, quantity: number, userId: UUID) {
     throw new BadRequestError("Quantity cannot be negative");
   }
 
-  const existingGrocery = (await GroceryModel.get({ id }))[0];
+  const existingGrocery = (await GroceryModel.get({ id })).data[0];
 
   if (!existingGrocery || existingGrocery.deletedAt) {
     throw new NotFoundError("Grocery does not exist");
@@ -95,7 +95,7 @@ export async function updateQuantity(id: UUID, quantity: number, userId: UUID) {
 }
 
 export async function deleteGrocery(id: UUID) {
-  const existingGrocery = (await GroceryModel.get({ id }))[0];
+  const existingGrocery = (await GroceryModel.get({ id })).data[0];
 
   if (!existingGrocery || existingGrocery.deletedAt) {
     throw new NotFoundError("Grocery does not exist");
