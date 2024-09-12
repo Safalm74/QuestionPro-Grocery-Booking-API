@@ -57,7 +57,12 @@ export default class UserModel extends BaseModel {
       query.where({ id: id });
     }
 
-    return query;
+    const data = {
+      data: await query,
+      total: await this.queryBuilder().count().from(this.tableName),
+    };
+
+    return data;
   }
 
   static getByEmail(email: string) {

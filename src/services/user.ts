@@ -50,7 +50,7 @@ export function getUserByEmail(email: string) {
 export async function updateUser(id: UUID, user: IUser) {
   logger.info("Updating a user");
 
-  const existingUser = (await getUsers({ id: id }))[0];
+  const existingUser = (await getUsers({ id: id })).data[0];
 
   if (!existingUser) {
     throw new NotFoundError("user not found");
@@ -65,7 +65,7 @@ export async function updateUser(id: UUID, user: IUser) {
 export async function deleteUser(id: UUID) {
   logger.info("Deleting a user");
 
-  const existingUser = (await getUsers({ id: id }))[0];
+  const existingUser = (await getUsers({ id: id })).data[0];
 
   if (!existingUser) {
     throw new NotFoundError("user not found");
