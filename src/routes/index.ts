@@ -18,6 +18,6 @@ router.use("/grocery", groceryRouter);
 
 router.use("/order", orderRouter);
 
-router.use("/orderItems", orderItemRouter);
+router.use("/order-items", orderItemRouter);
 
 export default router;
