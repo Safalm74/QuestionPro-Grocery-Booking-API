@@ -5,6 +5,7 @@ import adminRouter from "./admin";
 import groceryRouter from "./grocery";
 import orderRouter from "./order";
 import orderItemRouter from "./orderItem";
+import { authenticate, checkRole } from "../middlewares/auth";
 
 const router = express();
 
@@ -12,7 +13,7 @@ router.use("/user", userRouter);
 
 router.use("/auth", authRouter);
 
-router.use("/admin", adminRouter);
+router.use("/admin", authenticate, checkRole("admin"), adminRouter);
 
 router.use("/grocery", groceryRouter);
 

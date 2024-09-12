@@ -64,3 +64,19 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
+
+export function checkRole(role: string) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user!;
+    console.log(role, user);
+
+    //checking role for user
+    if (role != user.role) {
+      next(new ForbiddenError("Not allowed to access this route"));
+
+      return;
+    }
+
+    next();
+  };
+}
