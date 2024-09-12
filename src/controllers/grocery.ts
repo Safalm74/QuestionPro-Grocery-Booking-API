@@ -54,7 +54,7 @@ export async function createGrocery(
     const { body } = req;
     const data = await GroceryService.createGrocery(body);
 
-    res.status(HttpStatusCode.OK).json(data);
+    res.status(HttpStatusCode.CREATED).json(data);
   } catch (error) {
     next(error);
   }
@@ -284,7 +284,7 @@ export async function deleteGrocery(
   try {
     const { id } = req.params as { id: UUID };
     const data = await GroceryService.deleteGrocery(id);
-    res.status(HttpStatusCode.OK).json(data);
+    res.status(HttpStatusCode.NO_CONTENT).json(data);
   } catch (error) {
     next(error);
   }
