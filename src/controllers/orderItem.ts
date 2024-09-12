@@ -6,7 +6,7 @@ import { UUID } from "crypto";
 
 /**
  * @swagger
- * /order-item/{id}:
+ * /order-items/{id}:
  *   get:
  *     summary: Get order item by ID
  *     description: Retrieve a specific order item by its unique ID.
