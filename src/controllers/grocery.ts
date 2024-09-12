@@ -52,7 +52,8 @@ export async function createGrocery(
   logger.info("Request: createGrocery");
   try {
     const { body } = req;
-    const data = await GroceryService.createGrocery(body);
+    const userId = req.user!.id!;
+    const data = await GroceryService.createGrocery(body, userId);
 
     res.status(HttpStatusCode.CREATED).json(data);
   } catch (error) {
@@ -202,7 +203,8 @@ export async function updateGrocery(
   try {
     const { id } = req.params as { id: UUID };
     const { body } = req;
-    const data = await GroceryService.updateGrocery(id, body);
+    const userId = req.user!.id! as UUID;
+    const data = await GroceryService.updateGrocery(id, body, userId);
     res.status(HttpStatusCode.OK).json(data);
   } catch (error) {
     next(error);
@@ -247,7 +249,8 @@ export async function updateQuantity(
   try {
     const { id } = req.params as { id: UUID };
     const { body } = req;
-    const data = await GroceryService.updateQuantity(id, body.quantity);
+    const userId = req.user!.id! as UUID;
+    const data = await GroceryService.updateQuantity(id, body.quantity, userId);
 
     res.status(HttpStatusCode.OK).json(data);
   } catch (error) {

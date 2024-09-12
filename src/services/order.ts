@@ -27,7 +27,7 @@ export async function createOrder(data: IOrder, userId: UUID) {
       }
 
       const newQuantity = grocery[0].quantity - item.quantity;
-      await updateQuantity(item.groceryId, newQuantity);
+      await updateQuantity(item.groceryId, newQuantity, userId);
 
       return {
         orderId: order.id!,
@@ -81,7 +81,7 @@ export async function updateStatus(
     items.forEach(async (item) => {
       const grocery = await getGroceries({ id: item.groceryId });
       const newQuantity = grocery[0].quantity + item.quantity;
-      await updateQuantity(item.groceryId, newQuantity);
+      await updateQuantity(item.groceryId, newQuantity, userId);
     });
   }
 

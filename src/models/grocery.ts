@@ -5,13 +5,14 @@ import BaseModel from "./base";
 export class GroceryModel extends BaseModel {
   static tableName = "groceries";
 
-  static async create(data: IGrocery) {
+  static async create(data: IGrocery, userId: UUID) {
     const groceryToCreate = {
       imageUrl: data.imageUrl,
       name: data.name,
       description: data.description,
       price: data.price,
       quantity: data.quantity,
+      createdBy: userId,
     };
 
     const query = this.queryBuilder()
@@ -37,22 +38,23 @@ export class GroceryModel extends BaseModel {
     return await query;
   }
 
-  static async updateQuantity(id: UUID, quantity: number) {
+  static async updateQuantity(id: UUID, quantity: number, userId: UUID) {
     const query = this.queryBuilder()
-      .update({ quantity })
+      .update({ quantity: quantity, updated_at: new Date() })
       .table(this.tableName)
       .where({ id })
       .returning("*");
 
     return await query;
   }
-  static async update(id: UUID, data: IGrocery) {
+  static async update(id: UUID, data: IGrocery, userId: UUID) {
     const groceryToUpdate = {
       imageUrl: data.imageUrl,
       name: data.name,
       description: data.description,
       price: data.price,
       quantity: data.quantity,
+      updated_at: new Date(),
     };
     const query = this.queryBuilder()
       .update(groceryToUpdate)

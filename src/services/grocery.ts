@@ -7,10 +7,10 @@ import { BadRequestError } from "../error/BadRequestError";
 
 const logger = loggerWithNameSpace("service: grocery");
 
-export function createGrocery(data: IGrocery) {
+export function createGrocery(data: IGrocery, userId: UUID) {
   logger.info("Creating grocery");
 
-  return GroceryModel.create(data);
+  return GroceryModel.create(data, userId);
 }
 
 export async function getGroceriesForAdmin(filter: IGroceryQuery) {
@@ -66,7 +66,7 @@ export async function getGroceries(filter: IGroceryQuery) {
   });
 }
 
-export async function updateGrocery(id: UUID, data: IGrocery) {
+export async function updateGrocery(id: UUID, data: IGrocery, userId: UUID) {
   logger.info("Updating grocery");
 
   const existingGrocery = (await GroceryModel.get({ id }))[0];
@@ -75,10 +75,10 @@ export async function updateGrocery(id: UUID, data: IGrocery) {
     throw new NotFoundError("Grocery does not exist");
   }
 
-  return await GroceryModel.update(id, data);
+  return await GroceryModel.update(id, data, userId);
 }
 
-export async function updateQuantity(id: UUID, quantity: number) {
+export async function updateQuantity(id: UUID, quantity: number, userId: UUID) {
   logger.info("Updating grocery quantity");
 
   if (quantity < 0) {
@@ -91,7 +91,7 @@ export async function updateQuantity(id: UUID, quantity: number) {
     throw new NotFoundError("Grocery does not exist");
   }
 
-  return await GroceryModel.updateQuantity(id, quantity);
+  return await GroceryModel.updateQuantity(id, quantity, userId);
 }
 
 export async function deleteGrocery(id: UUID) {
