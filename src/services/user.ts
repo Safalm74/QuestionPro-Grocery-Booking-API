@@ -10,6 +10,13 @@ import { NotFoundError } from "../error/NotFoundError";
 
 const logger = loggerWithNameSpace("service: user");
 
+/**
+ * Service function to create a new user.
+ *
+ * @param user - The user data to create.
+ * @returns The created user.
+ * @throws BadRequestError if the email is already used.
+ */
 export async function createUser(user: IUser) {
   logger.info("Creating a new user");
 
@@ -35,18 +42,38 @@ export async function createUser(user: IUser) {
   return await UserModel.create(newUser);
 }
 
+/**
+ * Service function to retrieve users based on query.
+ *
+ * @param query - The query parameters to filter users.
+ * @returns The list of users matching the query.
+ */
 export async function getUsers(query: IGetUserQuery) {
   logger.info("Getting all users");
 
   return UserModel.get(query);
 }
 
+/**
+ * Service function to retrieve a user by email.
+ *
+ * @param email - The email of the user to retrieve.
+ * @returns The user matching the email.
+ */
 export function getUserByEmail(email: string) {
   logger.info("Getting a user by email");
 
   return UserModel.getByEmail(email);
 }
 
+/**
+ * Service function to update a user.
+ *
+ * @param id - The ID of the user to update.
+ * @param user - The updated user data.
+ * @returns The updated user.
+ * @throws NotFoundError if the user does not exist.
+ */
 export async function updateUser(id: UUID, user: IUser) {
   logger.info("Updating a user");
 
@@ -62,6 +89,13 @@ export async function updateUser(id: UUID, user: IUser) {
   return await UserModel.update(id, user);
 }
 
+/**
+ * Service function to delete a user.
+ *
+ * @param id - The ID of the user to delete.
+ * @returns The result of the deletion operation.
+ * @throws NotFoundError if the user does not exist.
+ */
 export async function deleteUser(id: UUID) {
   logger.info("Deleting a user");
 

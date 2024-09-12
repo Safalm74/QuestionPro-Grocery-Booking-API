@@ -7,6 +7,15 @@ import { InsufficientQuantityError } from "../error/insufficientQuantity";
 import { NotFoundError } from "../error/NotFoundError";
 import { BadRequestError } from "../error/BadRequestError";
 
+/**
+ * Service function to create a new order.
+ *
+ * @param data - The order data to create.
+ * @param userId - The ID of the user creating the order.
+ * @returns The created order.
+ * @throws NotFoundError if any grocery item is not found.
+ * @throws InsufficientQuantityError if any grocery item does not have enough quantity.
+ */
 export async function createOrder(data: IOrder, userId: UUID) {
   data.createdBy = userId;
   data.status = "pending";
@@ -43,6 +52,14 @@ export async function createOrder(data: IOrder, userId: UUID) {
   return order;
 }
 
+/**
+ * Service function to get orders for a user.
+ *
+ * @param filter - Query parameters to filter orders.
+ * @param userId - The ID of the user to filter orders by.
+ * @returns List of orders for the user.
+ * @throws NotFoundError if the order does not exist.
+ */
 export async function getOrder(filter: IOrderQuery, userId?: UUID) {
   filter.userId = userId;
 
@@ -55,6 +72,16 @@ export async function getOrder(filter: IOrderQuery, userId?: UUID) {
   return data;
 }
 
+/**
+ * Service function to update the status of an existing order.
+ *
+ * @param id - The ID of the order to update.
+ * @param data - The new status and updater ID.
+ * @param userId - The ID of the user updating the order.
+ * @returns The updated order.
+ * @throws NotFoundError if the order does not exist.
+ * @throws BadRequestError if trying to update a completed or cancelled order.
+ */
 export async function updateStatus(
   id: UUID,
   data: Pick<IOrder, "status" | "updatedBy">,
@@ -88,6 +115,13 @@ export async function updateStatus(
   return await OrderModel.update(id, data);
 }
 
+/**
+ * Service function to delete an order.
+ *
+ * @param id - The ID of the order to delete.
+ * @returns The result of the deletion operation.
+ * @throws NotFoundError if the order does not exist.
+ */
 export async function deleteOrder(id: UUID) {
   const existingOrder = (await OrderModel.get({ id })).data[0];
 

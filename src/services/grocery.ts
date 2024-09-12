@@ -7,12 +7,26 @@ import { BadRequestError } from "../error/BadRequestError";
 
 const logger = loggerWithNameSpace("service: grocery");
 
+/**
+ * Service function to create a new grocery item.
+ *
+ * @param data - The grocery item data to create.
+ * @param userId - The ID of the user creating the grocery item.
+ * @returns The created grocery item.
+ */
 export function createGrocery(data: IGrocery, userId: UUID) {
   logger.info("Creating grocery");
 
   return GroceryModel.create(data, userId);
 }
 
+/**
+ * Service function to get groceries for admin.
+ *
+ * @param filter - Query parameters to filter groceries.
+ * @returns List of groceries for admin.
+ * @throws NotFoundError if grocery does not exist.
+ */
 export async function getGroceriesForAdmin(filter: IGroceryQuery) {
   logger.info("Getting all groceries for admin");
 
@@ -25,6 +39,13 @@ export async function getGroceriesForAdmin(filter: IGroceryQuery) {
   return await GroceryModel.get(filter);
 }
 
+/**
+ * Service function to get groceries for users.
+ *
+ * @param filter - Query parameters to filter groceries.
+ * @returns List of available groceries.
+ * @throws NotFoundError if grocery does not exist.
+ */
 export async function getGroceries(filter: IGroceryQuery) {
   logger.info("Getting all groceries");
 
@@ -34,6 +55,7 @@ export async function getGroceries(filter: IGroceryQuery) {
     throw new NotFoundError("Grocery does not exist");
   }
 
+  // If a specific grocery ID is requested, return only that grocery.
   if (filter.id) {
     return [
       {
@@ -66,6 +88,15 @@ export async function getGroceries(filter: IGroceryQuery) {
   });
 }
 
+/**
+ * Service function to update an existing grocery item.
+ *
+ * @param id - The ID of the grocery to update.
+ * @param data - The new grocery data.
+ * @param userId - The ID of the user updating the grocery.
+ * @returns The updated grocery item.
+ * @throws NotFoundError if grocery does not exist.
+ */
 export async function updateGrocery(id: UUID, data: IGrocery, userId: UUID) {
   logger.info("Updating grocery");
 
@@ -78,6 +109,16 @@ export async function updateGrocery(id: UUID, data: IGrocery, userId: UUID) {
   return await GroceryModel.update(id, data, userId);
 }
 
+/**
+ * Service function to update the quantity of a grocery item.
+ *
+ * @param id - The ID of the grocery item to update.
+ * @param quantity - The new quantity.
+ * @param userId - The ID of the user updating the quantity.
+ * @returns The updated grocery item with the new quantity.
+ * @throws NotFoundError if grocery does not exist.
+ * @throws BadRequestError if quantity is negative.
+ */
 export async function updateQuantity(id: UUID, quantity: number, userId: UUID) {
   logger.info("Updating grocery quantity");
 
@@ -94,6 +135,13 @@ export async function updateQuantity(id: UUID, quantity: number, userId: UUID) {
   return await GroceryModel.updateQuantity(id, quantity, userId);
 }
 
+/**
+ * Service function to delete a grocery item.
+ *
+ * @param id - The ID of the grocery item to delete.
+ * @returns The result of the deletion operation.
+ * @throws NotFoundError if grocery does not exist.
+ */
 export async function deleteGrocery(id: UUID) {
   const existingGrocery = (await GroceryModel.get({ id })).data[0];
 

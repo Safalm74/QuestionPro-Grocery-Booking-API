@@ -10,9 +10,11 @@ import { ITokenPlayLoad } from "../interfaces/auth";
 const logger = loggerWithNameSpace("Auth Service");
 
 /**
- * service function to login:
- * @param body
- * @returns user details, new access and refresh token
+ * Service function to log in a user.
+ *
+ * @param body - Contains the user's email and password.
+ * @returns An object containing user details, access token, and refresh token.
+ * @throws UnauthicatedError if the login fails.
  */
 export async function login(body: Pick<IUser, "email" | "password">) {
   //to await bcrypt compare
@@ -78,21 +80,23 @@ export async function login(body: Pick<IUser, "email" | "password">) {
 }
 
 /**
- * Service function to generate new access token from valid refresh token
- * @param RefreshToken
- * @returns new access token
+ * Service function to generate a new access token from a valid refresh token.
+ *
+ * @param RefreshToken - The refresh token to verify.
+ * @returns An object containing the new access token.
+ * @throws UnauthicatedError if the refresh token is invalid.
  */
 export async function refreshAccessToken(RefreshToken: string) {
   const token = RefreshToken.split(" ");
 
   /*
-      the incoming token must have format of:
-        "Bearer <token>"
-      to ensure this, 
-      refresh token is splitted by (" ")
-      then checked if token[0]==="Bearer"
-      and splitted token is of length 2
-    */
+        the incoming token must have format of:
+          "Bearer <token>"
+        to ensure this, 
+        refresh token is splitted by (" ")
+        then checked if token[0]==="Bearer"
+        and splitted token is of length 2
+      */
   if (token?.length !== 2 || token[0] !== "Bearer") {
     logger.error(`token format mismatch: ${token}`);
 
