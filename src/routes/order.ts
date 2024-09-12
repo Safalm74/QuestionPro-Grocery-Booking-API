@@ -1,6 +1,6 @@
 import express from "express";
 import * as orderController from "../controllers/order";
-import { authenticate } from "../middlewares/auth";
+import { authenticate, authorize } from "../middlewares/auth";
 import { validateReqBody, validateReqParams } from "../middlewares/validation";
 import {
   getOrderQuerySchema,
@@ -12,23 +12,26 @@ const router = express.Router();
 
 router.post(
   "/",
-  authenticate,
   validateReqBody(orderBodySchema),
+  authenticate,
+  authorize("order: create"),
   orderController.createOrder
 );
 
 router.get(
   "/",
-  authenticate,
   validateReqParams(getOrderQuerySchema),
+  authenticate,
+  authorize("order: read"),
   orderController.getOrder
 );
 
 router.patch(
   "/:id",
-  authenticate,
   validateReqParams(getOrderQuerySchema),
   validateReqBody(orderStatusBodySchema),
+  authenticate,
+  authorize("order: update"),
   orderController.updateOrder
 );
 
@@ -36,6 +39,7 @@ router.delete(
   "/:id",
   validateReqParams(getOrderQuerySchema),
   authenticate,
+  authorize("order: delete"),
   orderController.deleteOrder
 );
 

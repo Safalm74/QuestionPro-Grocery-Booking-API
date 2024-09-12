@@ -8,6 +8,7 @@ import { UnauthicatedError } from "../error/UnauthenticatedError";
 import { ForbiddenError } from "../error/ForbiddenError";
 import loggerWithNameSpace from "../utils/logger";
 import { IUser } from "../interfaces/user";
+import { getPermisionsForRole } from "../services/roleAndPermission";
 
 const logger = loggerWithNameSpace("Auth Middleware");
 
@@ -76,6 +77,26 @@ export function checkRole(role: string) {
 
       return;
     }
+
+    next();
+  };
+}
+
+export function authorize(permission: string) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user!;
+
+    const permissions = await getPermisionsForRole(user.role);
+
+    //checking if permission required includes for user
+    if (!permissions.includes(permission)) {
+      logger.error("Permission not granted");
+
+      next(new ForbiddenError("Forbidden"));
+
+      return;
+    }
+    logger.info("Authorized");
 
     next();
   };
