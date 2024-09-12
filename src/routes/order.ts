@@ -2,7 +2,11 @@ import express from "express";
 import * as orderController from "../controllers/order";
 import { authenticate } from "../middlewares/auth";
 import { validateReqBody, validateReqParams } from "../middlewares/validation";
-import { getOrderQuerySchema, orderBodySchema } from "../schema/order";
+import {
+  getOrderQuerySchema,
+  orderBodySchema,
+  orderStatusBodySchema,
+} from "../schema/order";
 
 const router = express.Router();
 
@@ -24,7 +28,7 @@ router.patch(
   "/:id",
   authenticate,
   validateReqParams(getOrderQuerySchema),
-  validateReqBody(orderBodySchema),
+  validateReqBody(orderStatusBodySchema),
   orderController.updateOrder
 );
 
