@@ -10,6 +10,7 @@ import {
 
 const router = express.Router();
 
+//Route to create order
 router.post(
   "/",
   validateReqBody(orderBodySchema),
@@ -18,6 +19,7 @@ router.post(
   orderController.createOrder
 );
 
+//Route to get order
 router.get(
   "/",
   validateReqParams(getOrderQuerySchema),
@@ -26,6 +28,7 @@ router.get(
   orderController.getOrder
 );
 
+//Route to update order status
 router.patch(
   "/:id",
   validateReqParams(getOrderQuerySchema),
@@ -35,6 +38,7 @@ router.patch(
   orderController.updateOrder
 );
 
+//Route to delete order
 router.delete(
   "/:id",
   validateReqParams(getOrderQuerySchema),

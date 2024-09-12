@@ -5,6 +5,7 @@ import { getGroceryQuerySchema } from "../schema/grocery";
 
 const router = express();
 
+// Get groceries
 router.get(
   "/",
   validateReqQuery(getGroceryQuerySchema),

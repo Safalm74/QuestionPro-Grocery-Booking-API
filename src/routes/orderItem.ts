@@ -6,6 +6,7 @@ import { authenticate, authorize } from "../middlewares/auth";
 
 const router = express.Router();
 
+//Route to create order item
 router.get(
   "/:id",
   validateReqParams(orderParamSchema),
