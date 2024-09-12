@@ -4,6 +4,7 @@ import router from "./routes";
 import { swaggerDocs, swaggerUi } from "./swagger";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { requestLogger } from "./middlewares/logger";
 
 const app = express();
 
@@ -11,6 +12,9 @@ app.use(cors());
 
 // Use the Swagger UI middleware
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+//Middleware to log
+app.use(requestLogger);
 
 //Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
