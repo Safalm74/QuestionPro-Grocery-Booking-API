@@ -30,6 +30,9 @@ export const getGroceryQuerySchema = Joi.object({
 
 //Schema to grocery body
 export const groceryBodySchema = Joi.object({
+  imageUrl: Joi.string().required().messages({
+    "any.required": "Image Url is required",
+  }),
   name: Joi.string().required().messages({
     "any.required": "Name is required",
   }),

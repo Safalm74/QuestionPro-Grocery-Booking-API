@@ -35,7 +35,17 @@ export async function getGroceries(filter: IGroceryQuery) {
   }
 
   if (filter.id) {
-    return data[0];
+    return [
+      {
+        id: data[0].id,
+        imageUrl: data[0].imageUrl,
+        name: data[0].name,
+        description: data[0].description,
+        price: data[0].price,
+        quantity: data[0].quantity,
+        deletedAt: data[0].deletedAt,
+      },
+    ];
   }
 
   // filter out deleted and out-of-stock groceries
@@ -46,6 +56,7 @@ export async function getGroceries(filter: IGroceryQuery) {
   return data.map((grocery) => {
     return {
       id: grocery.id,
+      imageUrl: grocery.imageUrl,
       name: grocery.name,
       description: grocery.description,
       price: grocery.price,

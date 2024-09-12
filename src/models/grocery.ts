@@ -7,6 +7,7 @@ export class GroceryModel extends BaseModel {
 
   static async create(data: IGrocery) {
     const groceryToCreate = {
+      imageUrl: data.imageUrl,
       name: data.name,
       description: data.description,
       price: data.price,
@@ -47,6 +48,7 @@ export class GroceryModel extends BaseModel {
   }
   static async update(id: UUID, data: IGrocery) {
     const groceryToUpdate = {
+      imageUrl: data.imageUrl,
       name: data.name,
       description: data.description,
       price: data.price,
