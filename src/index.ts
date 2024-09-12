@@ -5,6 +5,7 @@ import { swaggerDocs, swaggerUi } from "./swagger";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { requestLogger } from "./middlewares/logger";
+import { genericErrorHandler, notFoundError } from "./middlewares/errorHandler";
 
 const app = express();
 
@@ -24,6 +25,12 @@ app.use(cookieParser());
 
 //Middleware to handle API requests
 app.use(router);
+
+//Middleware to handle errors
+app.use(genericErrorHandler);
+
+//Middleware to handle if route requested is not found
+app.use(notFoundError);
 
 //Start server
 app.listen(config.port, () => console.log(`Listening in port: ${config.port}`));
