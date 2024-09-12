@@ -30,7 +30,15 @@ export class OrderModel extends BaseModel {
       query.where({ id });
     }
 
-    return await query;
+    const data = {
+      data: await query,
+      total: await this.queryBuilder()
+        .count()
+        .from(this.tableName)
+        .where({ deleted_at: null }),
+    };
+
+    return data;
   }
 
   static async update(id: UUID, data: Pick<IOrder, "status" | "updatedBy">) {

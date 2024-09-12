@@ -46,7 +46,7 @@ export async function createOrder(data: IOrder, userId: UUID) {
 export async function getOrder(filter: IOrderQuery, userId?: UUID) {
   filter.userId = userId;
 
-  const data = await OrderModel.get(filter);
+  const data = (await OrderModel.get(filter)).data;
 
   if (filter.id && !data[0]) {
     throw new NotFoundError("Order does not exist");
@@ -62,7 +62,7 @@ export async function updateStatus(
 ) {
   data.updatedBy = userId;
 
-  const existingOrder = (await OrderModel.get({ id }))[0];
+  const existingOrder = (await OrderModel.get({ id })).data[0];
   if (!existingOrder) {
     throw new NotFoundError("Order does not exist");
   }
@@ -89,7 +89,7 @@ export async function updateStatus(
 }
 
 export async function deleteOrder(id: UUID) {
-  const existingOrder = (await OrderModel.get({ id }))[0];
+  const existingOrder = (await OrderModel.get({ id })).data[0];
 
   if (!existingOrder) {
     throw new NotFoundError("Order does not exist");
