@@ -48,6 +48,9 @@ export class OrderModel extends BaseModel {
       query.where({ id });
     }
 
+    // Order by created time in descending order to get the latest entries first
+    query.orderBy("created_time", "desc");
+
     const data = {
       data: await query,
       total: await this.queryBuilder()

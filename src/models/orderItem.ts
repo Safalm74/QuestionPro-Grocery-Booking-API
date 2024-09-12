@@ -95,6 +95,9 @@ export class OrderItemsModel extends BaseModel {
       .where({ id })
       .returning("*");
 
+    // Order by created time in descending order to get the latest entries first
+    query.orderBy("created_time", "desc");
+
     return await query;
   }
 }
