@@ -14,21 +14,21 @@ export function seed(knex: Knex): Promise<void> {
     .then(() => {
       return knex(TABLE_NAME).insert([
         {
-          imageUrl: "imageurl",
+          image_url: "imageurl",
           name: "apple",
           description: "fresh",
           price: 10,
           quantity: 10,
         },
         {
-          imageUrl: "imageurl",
+          image_url: "imageurl",
           name: "orange",
           description: "fresh",
           price: 10,
           quantity: 10,
         },
         {
-          imageUrl: "imageurl",
+          image_url: "imageurl",
           name: "Turkey",
           description: "fresh",
           price: 10,
