@@ -11,7 +11,12 @@ import { JWTMalformed } from "../error/JWTMalformed";
 import { JWTInvalidSignatureError } from "../error/JWTInvalidSignatureError";
 
 /**
- * error handler for 404
+ * Middleware function to handle 404 Not Found errors.
+ * Sends a response with a 404 status code when a route is not found.
+ *
+ * @param {Request} req - The HTTP request object.
+ * @param {Response} res - The HTTP response object.
+ * @returns {Response} - JSON response with a "Not Found" message.
  */
 export function notFoundError(req: Request, res: Response) {
   return res.status(HttpStatusCode.NOT_FOUND).json({
@@ -20,12 +25,16 @@ export function notFoundError(req: Request, res: Response) {
 }
 
 /**
- * error handler for generic errors
- * @param error
- * @param req
- * @param res
- * @param next
- * @returns
+ * Generic error handler middleware function.
+ * It handles different types of known errors and sends an appropriate response
+ * with a specific HTTP status code and error message.
+ * If the error type is not recognized, it defaults to a 500 Internal Server Error.
+ *
+ * @param {Error} error - The error object passed by the previous middleware.
+ * @param {Request} req - The HTTP request object.
+ * @param {Response} res - The HTTP response object.
+ * @param {NextFunction} next - Callback to pass control to the next middleware.
+ * @returns {Response} - JSON response with the corresponding error message and status code.
  */
 export function genericErrorHandler(
   error: Error,

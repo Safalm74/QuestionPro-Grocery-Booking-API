@@ -13,11 +13,14 @@ import { getPermisionsForRole } from "../services/roleAndPermission";
 const logger = loggerWithNameSpace("Auth Middleware");
 
 /**
- * middleware function to Authenticate
- * @param req
- * @param res
- * @param next
- * @returns
+ * Middleware function to authenticate a user using JWT.
+ * Extracts and verifies the JWT from the request headers.
+ * If the token is valid, attaches the user to the request object.
+ * If the token is missing or invalid, an error is passed to the next middleware.
+ *
+ * @param {Request} req - The HTTP request object, which contains the headers and user information.
+ * @param {Response} res - The HTTP response object.
+ * @param {NextFunction} next - Callback to pass control to the next middleware function.
  */
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   logger.info("Authenticating user by email");
@@ -66,12 +69,18 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * Middleware function to check the user's role.
+ * Verifies if the user's role matches the required role for accessing a specific route.
+ *
+ * @param {string} role - The role required to access the route.
+ * @returns {Function} - The middleware function to check the role.
+ */
 export function checkRole(role: string) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user!;
-    console.log(role, user);
 
-    //checking role for user
+    // If the user's role does not match the required role, return a Forbidden error
     if (role != user.role) {
       next(new ForbiddenError("Not allowed to access this route"));
 
@@ -82,6 +91,13 @@ export function checkRole(role: string) {
   };
 }
 
+/**
+ * Middleware function to check the user's permission.
+ * Verifies if the user has the required permission for accessing a specific route.
+ *
+ * @param {string} permission - The permission required to access the route.
+ * @returns {Function} - The middleware function to check the permission.
+ */
 export function authorize(permission: string) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user!;
