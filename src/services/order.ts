@@ -63,13 +63,15 @@ export async function createOrder(data: IOrder, userId: UUID) {
 export async function getOrder(filter: IOrderQuery, userId?: UUID) {
   filter.userId = userId;
 
-  const data = (await OrderModel.get(filter)).data;
+  const orders = await OrderModel.get(filter);
+
+  const data = orders.data;
 
   if (filter.id && !data[0]) {
     throw new NotFoundError("Order does not exist");
   }
 
-  return data;
+  return orders;
 }
 
 /**
