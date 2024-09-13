@@ -11,7 +11,11 @@ const TABLE_NAME = "roles_and_permissions";
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable(TABLE_NAME, (table) => {
     table.bigIncrements();
-    table.string("role").references("role").inTable("roles");
+    table
+      .string("role")
+      .references("role")
+      .inTable("roles")
+      .onDelete("cascade");
     table.string("permission");
   });
 }
