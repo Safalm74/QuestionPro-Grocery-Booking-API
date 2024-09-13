@@ -9,7 +9,7 @@ import { UUID } from "crypto";
  * @swagger
  * /order:
  *   post:
- *     summary: Create a new order
+ *     summary: Create a new order for a user. Admin cannot create an order
  *     tags: [Order]
  *     security:
  *       - bearerAuth: []
