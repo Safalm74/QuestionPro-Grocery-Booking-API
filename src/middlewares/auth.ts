@@ -28,14 +28,15 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   //extracting authorization from request header
   const { authorization } = req.headers;
 
-  logger.info("Checking if token exists");
-  //checking if token is provided in authorization
-  if (!authorization) {
-    logger.error("No token provided");
-    next(new UnauthicatedError("Un-Authenticated"));
-  }
+  try {
+    logger.info("Checking if token exists");
+    //checking if token is provided in authorization
+    if (!authorization) {
+      logger.error("No token provided");
+      next(new UnauthicatedError("Un-Authenticated"));
+    }
 
-  /*
+    /*
       the incoming token must have format of:
         "Bearer <token>"
       to ensure this, 
@@ -43,16 +44,15 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
       then checked if token[0]==="Bearer"
       and splitted token is of length 2
     */
-  const token = authorization?.split(" ");
+    const token = authorization?.split(" ");
 
-  if (token?.length !== 2 || token[0] !== "Bearer") {
-    logger.error("Invalid token");
-    next(new UnauthicatedError("Un-Authenticated"));
+    if (token?.length !== 2 || token[0] !== "Bearer") {
+      logger.error("Invalid token");
+      next(new UnauthicatedError("Un-Authenticated"));
 
-    return;
-  }
-  logger.info("verifying token");
-  try {
+      return;
+    }
+    logger.info("verifying token");
     //JWT verify verifies the token and returns decoded token if verified
     const user = verify(token[1], config.jwt.jwt_secret!) as Omit<
       IUser,
