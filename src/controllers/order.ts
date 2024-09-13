@@ -159,7 +159,7 @@ export async function getOrder(
 
 /**
  * @swagger
- * /order/{id}:
+ * /order/status/{id}:
  *   patch:
  *     summary: Update order status
  *     tags: [Order]
@@ -214,7 +214,62 @@ export async function updateOrder(
 
 /**
  * @swagger
- * /order/{id}:
+ * /admin/order/status/{id}/:
+ *   patch:
+ *     summary: Update order quantity by admin
+ *     tags: [Order]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Order ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               quantity:
+ *                 type: integer
+ *                 description: Updated quantity for the order
+ *     responses:
+ *       200:
+ *         description: Order quantity updated successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
+export async function updateOrderQuantityByAdmin(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = req.params as { id: UUID };
+    const status = req.body as Pick<IOrder, "status" | "updatedBy">;
+    const userId = req.user!.id! as UUID;
+
+    const data = await OrderServices.updateStatusByAdmin(id, status, userId);
+
+    res.status(HttpStatusCode.OK).json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @swagger
+ * /admin/order/{id}:
  *   delete:
  *     summary: Delete an order
  *     tags: [Order]

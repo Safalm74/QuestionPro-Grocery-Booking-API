@@ -1,7 +1,11 @@
 import express from "express";
 import * as orderController from "../controllers/order";
 import { authenticate, authorize } from "../middlewares/auth";
-import { validateReqBody, validateReqParams } from "../middlewares/validation";
+import {
+  validateReqBody,
+  validateReqParams,
+  validateReqQuery,
+} from "../middlewares/validation";
 import {
   getOrderQuerySchema,
   orderBodySchema,
@@ -22,7 +26,7 @@ router.post(
 //Route to get order
 router.get(
   "/",
-  validateReqParams(getOrderQuerySchema),
+  validateReqQuery(getOrderQuerySchema),
   authenticate,
   authorize("order: read"),
   orderController.getOrder
@@ -30,21 +34,12 @@ router.get(
 
 //Route to update order status
 router.patch(
-  "/:id",
+  "/status/:id",
   validateReqParams(getOrderQuerySchema),
   validateReqBody(orderStatusBodySchema),
   authenticate,
   authorize("order: update"),
   orderController.updateOrder
-);
-
-//Route to delete order
-router.delete(
-  "/:id",
-  validateReqParams(getOrderQuerySchema),
-  authenticate,
-  authorize("order: delete"),
-  orderController.deleteOrder
 );
 
 export default router;

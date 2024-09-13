@@ -115,6 +115,34 @@ export async function updateStatus(
   return await OrderModel.update(id, data);
 }
 
+export async function updateStatusByAdmin(
+  id: UUID,
+  data: Pick<IOrder, "status" | "updatedBy">,
+  userId: UUID
+) {
+  data.updatedBy = userId;
+
+  const existingOrder = (await OrderModel.get({ id })).data[0];
+  if (!existingOrder) {
+    throw new NotFoundError("Order does not exist");
+  }
+
+  if (existingOrder.status === "cancelled") {
+    throw new BadRequestError("Order already cancelled");
+  }
+
+  if (data.status === "cancelled") {
+    const items = await orderItemService.get(id);
+
+    items.forEach(async (item) => {
+      const grocery = await getGroceries({ id: item.groceryId });
+      const newQuantity = grocery[0].quantity + item.quantity;
+      await updateQuantity(item.groceryId, newQuantity, userId);
+    });
+
+    return await OrderModel.update(id, data);
+  }
+}
 /**
  * Service function to delete an order.
  *

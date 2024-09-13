@@ -36,7 +36,7 @@ export class OrderModel extends BaseModel {
    * @returns {Promise<{ data: any[]; total: number }>} An object containing the queried data and total count.
    */
   static async get(filter: IOrderQuery) {
-    const { id: id, page, size } = filter;
+    const { id: id, page, size, userId } = filter;
     const query = this.queryBuilder().select("*").table(this.tableName);
 
     if (page && size) {
@@ -46,6 +46,11 @@ export class OrderModel extends BaseModel {
     // Filter by ID if provided
     if (id) {
       query.where({ id });
+    }
+
+    // Filter by user ID if provided
+    if (userId) {
+      query.where({ createdBy: userId });
     }
 
     // Order by created time in descending order to get the latest entries first
