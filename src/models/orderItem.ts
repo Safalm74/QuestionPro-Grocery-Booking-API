@@ -32,6 +32,8 @@ export class OrderItemsModel extends BaseModel {
       .returning("*");
 
     const result = await query;
+
+    return result;
   }
 
   /**
