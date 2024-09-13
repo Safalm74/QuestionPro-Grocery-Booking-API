@@ -35,12 +35,6 @@ const logger = loggerWithNameSpace("Controller: user");
  *               address:
  *                 type: string
  *                 example: 123 Main St
- *               role:
- *                 type: string
- *                 enum:
- *                   - admin
- *                   - user
- *                 example: user
  *     responses:
  *       201:
  *         description: User created successfully
