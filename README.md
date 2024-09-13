@@ -64,7 +64,7 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Build and start the services**:
     ```sh
-    docker-compose up --pull
+    docker-compose up 
     ```
 
 2. **Stop the services**:
