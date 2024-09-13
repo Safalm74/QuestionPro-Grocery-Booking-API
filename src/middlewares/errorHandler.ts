@@ -9,6 +9,7 @@ import { JsonWebTokenError } from "jsonwebtoken";
 import { JWTExpiredError } from "../error/JWTExpiredError";
 import { JWTMalformed } from "../error/JWTMalformed";
 import { JWTInvalidSignatureError } from "../error/JWTInvalidSignatureError";
+import { InsufficientQuantityError } from "../error/insufficientQuantity";
 
 /**
  * Middleware function to handle 404 Not Found errors.
@@ -65,6 +66,12 @@ export function genericErrorHandler(
   }
 
   if (error instanceof JsonWebTokenError) {
+    return res.status(HttpStatusCode.BAD_REQUEST).json({
+      message: error.message,
+    });
+  }
+
+  if (error instanceof InsufficientQuantityError) {
     return res.status(HttpStatusCode.BAD_REQUEST).json({
       message: error.message,
     });
