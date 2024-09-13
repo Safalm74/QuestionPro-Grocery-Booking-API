@@ -1,3 +1,5 @@
+version: '3.8' 
+
 services:
   postgres:
     container_name: postgres
@@ -11,6 +13,11 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     container_name: pgadmin
@@ -26,8 +33,7 @@ services:
 
   backend:
     container_name: backend
-    image: safarajmanandhar/question-pro-grocery-booking-api
-
+    image: safarajmanandhar/question-pro-grocery-booking-api:latest
     environment:
       - DB_NAME=${DB_NAME}
       - DB_HOST=${DB_HOST}
@@ -35,14 +41,13 @@ services:
       - DB_USER=${DB_USER}
       - DB_PORT=${DB_PORT}
       - JWT_SECRET=${JWT_SECRET}
-      - DB_PORT=${DB_PORT}
       - DB_CLIENT=${DB_CLIENT}
     ports:
       - "${PORT}:${PORT}"
     command: bash -c "npm start"
-
     restart: always
-    depends_on: [postgres]
+    depends_on:
+      - seed
 
   migrate:
     container_name: migrate
@@ -55,11 +60,12 @@ services:
       - DB_PORT=${DB_PORT}
       - JWT_SECRET=${JWT_SECRET}
       - DB_CLIENT=${DB_CLIENT}
-    command: bash -c "npm run migrate" 
-    restart: "no"  
+    command: bash -c "npm run migrate"
+    restart: "no"
     depends_on:
-      - postgres
-      
+      postgres:
+        condition: service_healthy
+
   seed:
     container_name: seed
     image: safarajmanandhar/question-pro-grocery-booking-api
@@ -71,7 +77,8 @@ services:
       - DB_PORT=${DB_PORT}
       - JWT_SECRET=${JWT_SECRET}
       - DB_CLIENT=${DB_CLIENT}
-    command: bash -c "npm run seed:run"  
-    restart: "no"  
+    command: bash -c "npm run seed:run"
+    restart: "no"
     depends_on:
-      - migrate 
+      migrate:
+        condition: service_completed_successfully
