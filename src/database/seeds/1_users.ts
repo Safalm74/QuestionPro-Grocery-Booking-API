@@ -15,7 +15,7 @@ export async function seed(knex: Knex): Promise<void> {
       {
         name: "admin",
         email: "admin@admin.com",
-        password: bcrypt.hashSync("admin", 10),
+        password: bcrypt.hashSync("Admin123", 10),
         phone: "0123456789",
         address: "admin",
         role: "admin",
@@ -23,7 +23,7 @@ export async function seed(knex: Knex): Promise<void> {
       {
         name: "user",
         email: "user@user.com",
-        password: bcrypt.hashSync("user", 10),
+        password: bcrypt.hashSync("User123", 10),
         phone: "0123456789",
         address: "user",
         role: "user",
