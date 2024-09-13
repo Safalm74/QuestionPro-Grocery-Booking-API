@@ -24,6 +24,10 @@ const logger = loggerWithNameSpace("Grocery Controller");
  *           schema:
  *             type: object
  *             properties:
+ *               imageUrl:
+ *                 type: string
+ *                 description: URL of the image of the grocery item
+ *                 example: https://example.com/image.png
  *               name:
  *                 type: string
  *                 description: Name of the grocery item
@@ -43,6 +47,49 @@ const logger = loggerWithNameSpace("Grocery Controller");
  *     responses:
  *       201:
  *         description: Grocery item created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 groceries:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: ID of the grocery item
+ *                       imageUrl:
+ *                         type: string
+ *                         description: URL of the image of the grocery item
+ *                       name:
+ *                         type: string
+ *                         description: Name of the grocery item
+ *                       description:
+ *                         type: string
+ *                         description: Description of the grocery item
+ *                       price:
+ *                         type: number
+ *                         description: Price of the grocery item
+ *                       quantity:
+ *                         type: number
+ *                         description: Quantity of the grocery item
+ *                       createdAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was created
+ *                       createdBy:
+ *                         type: string
+ *                         description: ID of the user who created the grocery item
+ *                       updatedAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was updated
+ *                       updatedBy:
+ *                         type: string
+ *                         description: ID of the user who updated the grocery item
+ *                       deletedAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was deleted
  *       400:
  *         description: Bad request
  *       401:
@@ -52,6 +99,7 @@ const logger = loggerWithNameSpace("Grocery Controller");
  *       500:
  *         description: Internal server error
  */
+
 export async function createGrocery(
   req: Request,
   res: Response,
@@ -95,6 +143,40 @@ export async function createGrocery(
  *     responses:
  *       200:
  *         description: List of groceries
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: object
+ *                   properties:
+ *                     count:
+ *                       type: number
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: ID of the grocery item
+ *                     imageUrl:
+ *                       type: string
+ *                       description: URL of the image of the grocery item
+ *                     name:
+ *                       type: string
+ *                       description: Name of the grocery item
+ *                     description:
+ *                       type: string
+ *                       description: Description of the grocery item
+ *                     price:
+ *                       type: number
+ *                       description: Price of the grocery item
+ *                     quantity:
+ *                       type: number
+ *                       description: Quantity of the grocery item
+ *                     deletedAt:
+ *                       type: string
+ *                       description: Date and time when the grocery item was deleted
  *       400:
  *         description: Bad request
  *       404:
@@ -146,6 +228,52 @@ export async function getGrocery(
  *     responses:
  *       200:
  *         description: List of groceries for admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: object
+ *                   properties:
+ *                     count:
+ *                       type: number
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: ID of the grocery item
+ *                     imageUrl:
+ *                       type: string
+ *                       description: URL of the image of the grocery item
+ *                     name:
+ *                       type: string
+ *                       description: Name of the grocery item
+ *                     description:
+ *                       type: string
+ *                       description: Description of the grocery item
+ *                     price:
+ *                       type: number
+ *                       description: Price of the grocery item
+ *                     quantity:
+ *                       type: number
+ *                       description: Quantity of the grocery item
+ *                     createdAt:
+ *                       type: string
+ *                       description: Date and time when the grocery item was created
+ *                     createdBy:
+ *                       type: string
+ *                       description: ID of the user who created the grocery item
+ *                     updatedAt:
+ *                       type: string
+ *                       description: Date and time when the grocery item was updated
+ *                     updatedBy:
+ *                       type: string
+ *                       description: ID of the user who updated the grocery item
+ *                     deletedAt:
+ *                       type: string
+ *                       description: Date and time when the grocery item was deleted
  *       400:
  *         description: Bad request
  *       401:
@@ -215,6 +343,49 @@ export async function getGroceriesForAdmin(
  *     responses:
  *       200:
  *         description: Grocery item updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 groceries:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: ID of the grocery item
+ *                       imageUrl:
+ *                         type: string
+ *                         description: URL of the image of the grocery item
+ *                       name:
+ *                         type: string
+ *                         description: Name of the grocery item
+ *                       description:
+ *                         type: string
+ *                         description: Description of the grocery item
+ *                       price:
+ *                         type: number
+ *                         description: Price of the grocery item
+ *                       quantity:
+ *                         type: number
+ *                         description: Quantity of the grocery item
+ *                       createdAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was created
+ *                       createdBy:
+ *                         type: string
+ *                         description: ID of the user who created the grocery item
+ *                       updatedAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was updated
+ *                       updatedBy:
+ *                         type: string
+ *                         description: ID of the user who updated the grocery item
+ *                       deletedAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was deleted
  *       400:
  *         description: Bad request
  *       401:
@@ -271,6 +442,49 @@ export async function updateGrocery(
  *     responses:
  *       200:
  *         description: Quantity updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 groceries:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: ID of the grocery item
+ *                       imageUrl:
+ *                         type: string
+ *                         description: URL of the image of the grocery item
+ *                       name:
+ *                         type: string
+ *                         description: Name of the grocery item
+ *                       description:
+ *                         type: string
+ *                         description: Description of the grocery item
+ *                       price:
+ *                         type: number
+ *                         description: Price of the grocery item
+ *                       quantity:
+ *                         type: number
+ *                         description: Quantity of the grocery item
+ *                       createdAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was created
+ *                       createdBy:
+ *                         type: string
+ *                         description: ID of the user who created the grocery item
+ *                       updatedAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was updated
+ *                       updatedBy:
+ *                         type: string
+ *                         description: ID of the user who updated the grocery item
+ *                       deletedAt:
+ *                         type: string
+ *                         description: Date and time when the grocery item was deleted
  *       400:
  *         description: Bad request
  *       401:

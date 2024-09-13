@@ -10,7 +10,7 @@ import { UUID } from "crypto";
  * /order:
  *   post:
  *     summary: Create a new order
- *     tags: [Orders]
+ *     tags: [Order]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -25,7 +25,7 @@ import { UUID } from "crypto";
  *                 items:
  *                   type: object
  *                   properties:
- *                     orderId:
+ *                     groceryId:
  *                       type: string
  *                       description: ID of the order item
  *                     quantity:
@@ -34,6 +34,35 @@ import { UUID } from "crypto";
  *     responses:
  *       201:
  *         description: Order created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID of the order
+ *                 status:
+ *                   type: string
+ *                   description: Status of the order
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was created
+ *                 createdBy:
+ *                   type: string
+ *                   description: ID of the user who created the order
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was last updated (if any)
+ *                 updatedBy:
+ *                   type: string
+ *                   description: ID of the user who last updated the order (if any)
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was deleted (if any)
  *       400:
  *         description: Bad request
  *       401:
@@ -85,6 +114,48 @@ export async function createOrder(
  *     responses:
  *       200:
  *         description: List of orders
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: ID of the order
+ *                       status:
+ *                         type: string
+ *                         description: Status of the order
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date and time when the order was created
+ *                       createdBy:
+ *                         type: string
+ *                         description: ID of the user who created the order
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date and time when the order was last updated (if any)
+ *                       updatedBy:
+ *                         type: string
+ *                         description: ID of the user who last updated the order (if any)
+ *                       deletedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date and time when the order was deleted (if any)
+ *                 total:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       count:
+ *                         type: number
+ *                         description: Total count of the orders
  *       401:
  *         description: Unauthorized
  *       403:
@@ -134,6 +205,48 @@ export async function getAdminOrder(
  *     responses:
  *       200:
  *         description: List of orders
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: ID of the order
+ *                       status:
+ *                         type: string
+ *                         description: Status of the order
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date and time when the order was created
+ *                       createdBy:
+ *                         type: string
+ *                         description: ID of the user who created the order
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date and time when the order was last updated (if any)
+ *                       updatedBy:
+ *                         type: string
+ *                         description: ID of the user who last updated the order (if any)
+ *                       deletedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date and time when the order was deleted (if any)
+ *                 total:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       count:
+ *                         type: number
+ *                         description: Total count of the orders
  *       401:
  *         description: Unauthorized
  *       403:
@@ -185,6 +298,35 @@ export async function getOrder(
  *     responses:
  *       200:
  *         description: Order updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID of the order
+ *                 status:
+ *                   type: string
+ *                   description: Status of the order
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was created
+ *                 createdBy:
+ *                   type: string
+ *                   description: ID of the user who created the order
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was last updated (if any)
+ *                 updatedBy:
+ *                   type: string
+ *                   description: ID of the user who last updated the order (if any)
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was deleted (if any)
  *       401:
  *         description: Unauthorized
  *       403:
@@ -240,6 +382,35 @@ export async function updateOrder(
  *     responses:
  *       200:
  *         description: Order quantity updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID of the order
+ *                 status:
+ *                   type: string
+ *                   description: Status of the order
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was created
+ *                 createdBy:
+ *                   type: string
+ *                   description: ID of the user who created the order
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was last updated (if any)
+ *                 updatedBy:
+ *                   type: string
+ *                   description: ID of the user who last updated the order (if any)
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The date and time when the order was deleted (if any)
  *       401:
  *         description: Unauthorized
  *       403:
@@ -303,7 +474,6 @@ export async function deleteOrder(
     const { id } = req.params as { id: UUID };
 
     const data = await OrderServices.deleteOrder(id);
-    console.log(data);
 
     res.status(HttpStatusCode.NO_CONTENT).json(data);
   } catch (error) {
