@@ -30,13 +30,14 @@ export function createGrocery(data: IGrocery, userId: UUID) {
 export async function getGroceriesForAdmin(filter: IGroceryQuery) {
   logger.info("Getting all groceries for admin");
 
-  const data = (await GroceryModel.get(filter)).data;
+  const groceries = await GroceryModel.get(filter);
+  const data = groceries.data;
 
   if (filter.id && !data[0]) {
     throw new NotFoundError("Grocery does not exist");
   }
 
-  return await GroceryModel.get(filter);
+  return groceries;
 }
 
 /**
@@ -49,7 +50,9 @@ export async function getGroceriesForAdmin(filter: IGroceryQuery) {
 export async function getGroceries(filter: IGroceryQuery) {
   logger.info("Getting all groceries");
 
-  let data = (await GroceryModel.get(filter)).data;
+  const groceries = await GroceryModel.get(filter);
+  let data = groceries.data;
+  const total = groceries.total;
 
   if (filter.id && !data[0]) {
     throw new NotFoundError("Grocery does not exist");
@@ -57,17 +60,21 @@ export async function getGroceries(filter: IGroceryQuery) {
 
   // If a specific grocery ID is requested, return only that grocery.
   if (filter.id) {
-    return [
-      {
-        id: data[0].id,
-        imageUrl: data[0].imageUrl,
-        name: data[0].name,
-        description: data[0].description,
-        price: data[0].price,
-        quantity: data[0].quantity,
-        deletedAt: data[0].deletedAt,
-      },
-    ];
+    const dataToreturn = {
+      total: total,
+      data: [
+        {
+          id: data[0].id,
+          imageUrl: data[0].imageUrl,
+          name: data[0].name,
+          description: data[0].description,
+          price: data[0].price,
+          quantity: data[0].quantity,
+          deletedAt: data[0].deletedAt,
+        },
+      ],
+    };
+    return dataToreturn;
   }
 
   // filter out deleted and out-of-stock groceries
@@ -75,17 +82,22 @@ export async function getGroceries(filter: IGroceryQuery) {
     return grocery.quantity > 0 && !grocery.deletedAt;
   });
 
-  return data.map((grocery) => {
-    return {
-      id: grocery.id,
-      imageUrl: grocery.imageUrl,
-      name: grocery.name,
-      description: grocery.description,
-      price: grocery.price,
-      quantity: grocery.quantity,
-      deletedAt: grocery.deletedAt,
-    };
-  });
+  const dataToreturn = {
+    total: total,
+    data: data.map((grocery) => {
+      return {
+        id: grocery.id,
+        imageUrl: grocery.imageUrl,
+        name: grocery.name,
+        description: grocery.description,
+        price: grocery.price,
+        quantity: grocery.quantity,
+        deletedAt: grocery.deletedAt,
+      };
+    }),
+  };
+
+  return dataToreturn;
 }
 
 /**

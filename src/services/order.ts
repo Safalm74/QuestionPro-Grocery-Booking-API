@@ -24,7 +24,7 @@ export async function createOrder(data: IOrder, userId: UUID) {
 
   const orderItems = await Promise.all(
     data.items.map(async (item) => {
-      const grocery = await getGroceries({ id: item.groceryId });
+      const grocery = (await getGroceries({ id: item.groceryId })).data;
 
       if (!grocery[0]) {
         throw new NotFoundError(`Grocery item ${item.groceryId} not found`);
@@ -42,7 +42,8 @@ export async function createOrder(data: IOrder, userId: UUID) {
         orderId: order.id!,
         groceryId: item.groceryId,
         quantity: item.quantity,
-        pricePerUnit: (await getGroceries({ id: item.groceryId }))[0].price,
+        pricePerUnit: (await getGroceries({ id: item.groceryId })).data[0]
+          .price,
       };
     })
   );
@@ -109,7 +110,7 @@ export async function updateStatus(
 
     items.forEach(async (item) => {
       const grocery = await getGroceries({ id: item.groceryId });
-      const newQuantity = grocery[0].quantity + item.quantity;
+      const newQuantity = grocery.data[0].quantity + item.quantity;
       await updateQuantity(item.groceryId, newQuantity, userId);
     });
   }
@@ -138,7 +139,7 @@ export async function updateStatusByAdmin(
 
     items.forEach(async (item) => {
       const grocery = await getGroceries({ id: item.groceryId });
-      const newQuantity = grocery[0].quantity + item.quantity;
+      const newQuantity = grocery.data[0].quantity + item.quantity;
       await updateQuantity(item.groceryId, newQuantity, userId);
     });
 
