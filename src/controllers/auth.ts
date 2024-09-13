@@ -26,7 +26,7 @@ const logger = loggerWithNameSpace("Auth Controller");
  *                 example: admin@admin.com
  *               password:
  *                 type: string
- *                 example: Admin!123
+ *                 example: Admin123!
  *             required:
  *               - username
  *               - password
