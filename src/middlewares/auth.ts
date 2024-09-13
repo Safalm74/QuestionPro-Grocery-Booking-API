@@ -102,7 +102,9 @@ export function authorize(permission: string) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user!;
 
-    const permissions = await getPermisionsForRole(user.role);
+    const permissions = (await getPermisionsForRole(user.role)).map(
+      (perm) => perm.permission
+    );
 
     //checking if permission required includes for user
     if (!permissions.includes(permission)) {
