@@ -44,6 +44,10 @@ const logger = loggerWithNameSpace("Controller: user");
  *     responses:
  *       201:
  *         description: User created successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
  */
 export async function createUser(
   req: Request,
@@ -67,6 +71,8 @@ export async function createUser(
  * /user:
  *   get:
  *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     summary: Get all users
  *     description: Retrieve a list of users, you can set page number with size
  *     responses:
@@ -97,6 +103,8 @@ export async function createUser(
  *                     type: string
  *                   updated_at:
  *                     type: string
+ *       500:
+ *         description: Internal server error
  */
 export async function getUsers(
   req: Request,
@@ -121,6 +129,8 @@ export async function getUsers(
  * /user/{id}:
  *   put:
  *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     summary: Update a user
  *     description: Modify details of an existing user
  *     parameters:
@@ -161,6 +171,14 @@ export async function getUsers(
  *     responses:
  *       200:
  *         description: User updated successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function updateUser(
   req: Request,
@@ -184,6 +202,8 @@ export async function updateUser(
  * /user/{id}:
  *   delete:
  *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     summary: Delete a user
  *     description: Remove a user from the system
  *     parameters:
@@ -196,6 +216,14 @@ export async function updateUser(
  *     responses:
  *       204:
  *         description: User deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function deleteUser(
   req: Request,

@@ -12,6 +12,8 @@ import { UUID } from "crypto";
  *     description: Retrieve a specific order item by its unique ID.
  *     tags:
  *       - Order Item
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: orderId
  *         in: path
@@ -42,6 +44,10 @@ import { UUID } from "crypto";
  *                   description: Quantity ordered
  *       400:
  *         description: Invalid ID supplied
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Order item not found
  *       500:

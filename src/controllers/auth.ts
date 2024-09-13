@@ -45,8 +45,8 @@ const logger = loggerWithNameSpace("Auth Controller");
  *                       type: string
  *                     refreshToken:
  *                       type: string
- *       400:
- *         description: Invalid credentials.
+ *       401:
+ *         description: UnauthicatedError.
  *       500:
  *         description: Internal server error.
  */

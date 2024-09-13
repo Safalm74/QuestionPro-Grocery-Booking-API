@@ -34,6 +34,12 @@ import { UUID } from "crypto";
  *     responses:
  *       201:
  *         description: Order created successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: Internal server error
  */
@@ -57,7 +63,7 @@ export async function createOrder(
  * /admin/order:
  *   get:
  *     summary: Get orders for admin
- *     tags: [Orders]
+ *     tags: [Order]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -79,6 +85,10 @@ export async function createOrder(
  *     responses:
  *       200:
  *         description: List of orders
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: Internal server error
  */
@@ -102,7 +112,7 @@ export async function getAdminOrder(
  * /order:
  *   get:
  *     summary: Get orders for a user
- *     tags: [Orders]
+ *     tags: [Order]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -124,6 +134,10 @@ export async function getAdminOrder(
  *     responses:
  *       200:
  *         description: List of orders
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: Internal server error
  */
@@ -148,7 +162,7 @@ export async function getOrder(
  * /order/{id}:
  *   patch:
  *     summary: Update order status
- *     tags: [Orders]
+ *     tags: [Order]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -171,6 +185,10 @@ export async function getOrder(
  *     responses:
  *       200:
  *         description: Order updated successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Order not found
  *       500:
@@ -199,7 +217,7 @@ export async function updateOrder(
  * /order/{id}:
  *   delete:
  *     summary: Delete an order
- *     tags: [Orders]
+ *     tags: [Order]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -212,6 +230,10 @@ export async function updateOrder(
  *     responses:
  *       200:
  *         description: Order deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Order not found
  *       500:

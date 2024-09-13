@@ -15,6 +15,8 @@ const logger = loggerWithNameSpace("Grocery Controller");
  *     summary: Create a new grocery item
  *     description: Create a new grocery item with the provided details.
  *     tags: [Grocery]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -39,10 +41,16 @@ const logger = loggerWithNameSpace("Grocery Controller");
  *                 description: Quantity of the grocery item
  *                 example: 10
  *     responses:
- *       200:
+ *       201:
  *         description: Grocery item created successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       500:
+ *         description: Internal server error
  */
 export async function createGrocery(
   req: Request,
@@ -91,6 +99,8 @@ export async function createGrocery(
  *         description: Bad request
  *       404:
  *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function getGrocery(
   req: Request,
@@ -115,6 +125,8 @@ export async function getGrocery(
  *     summary: Get a list of groceries for admin
  *     description: Retrieve a list of groceries for admin users based on query filters.
  *     tags: [Grocery]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: id
@@ -136,8 +148,14 @@ export async function getGrocery(
  *         description: List of groceries for admin
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function getGroceriesForAdmin(
   req: Request,
@@ -162,6 +180,8 @@ export async function getGroceriesForAdmin(
  *     summary: Update a grocery item
  *     description: Update the details of an existing grocery item.
  *     tags: [Grocery]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -197,8 +217,14 @@ export async function getGroceriesForAdmin(
  *         description: Grocery item updated successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function updateGrocery(
   req: Request,
@@ -224,6 +250,8 @@ export async function updateGrocery(
  *     summary: Update grocery quantity
  *     description: Update the quantity of a specific grocery item.
  *     tags: [Grocery]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -245,8 +273,14 @@ export async function updateGrocery(
  *         description: Quantity updated successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function updateQuantity(
   req: Request,
@@ -273,6 +307,8 @@ export async function updateQuantity(
  *     summary: Delete a grocery item
  *     description: Delete a specific grocery item by its ID.
  *     tags: [Grocery]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -285,8 +321,14 @@ export async function updateQuantity(
  *         description: Grocery item deleted successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  *       404:
  *         description: Not found
+ *       500:
+ *         description: Internal server error
  */
 export async function deleteGrocery(
   req: Request,
