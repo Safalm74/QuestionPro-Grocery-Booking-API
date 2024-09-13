@@ -39,6 +39,23 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Environment Variables**:
     Create a `.env` file in the project root directory and configure the necessary environment variables. Refer to the `.env.example` file for required variables.
+    *For Example:*
+     ```sh
+        PORT=8000
+
+        JWT_SECRET='secret'
+
+        DB_CLIENT='pg'
+        DB_HOST='postgres'
+        DB_USER='postgres'
+        DB_PW='postgres'
+        DB_PORT=5432
+        DB_NAME='postgres'
+
+        PGADMIN_MAIL="pgadmin@mail.com"
+        PGADMIN_PW="pgadmin_password"
+    ```
+
 
 2. **Docker Compose**:
     The `docker-compose.yml` file is already configured to set up the necessary services (server and PostgreSQL). Adjust the configuration as needed using .env.
@@ -47,7 +64,7 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Build and start the services**:
     ```sh
-    docker-compose up 
+    docker-compose up --pull
     ```
 
 2. **Stop the services**:
