@@ -23,10 +23,10 @@ const logger = loggerWithNameSpace("Auth Controller");
  *             properties:
  *               email:
  *                 type: string
- *                 example: 9VnZv@example.com
+ *                 example: admin@admin.com
  *               password:
  *                 type: string
- *                 example: Aapple!123456
+ *                 example: Admin!123
  *             required:
  *               - username
  *               - password
